@@ -206,6 +206,83 @@
 /// ```
 #let sen = math.op("sen")
 
+/// Tangente — exibe "tg" em vez de "tan".
+///
+/// Uso: `$tg(x)$`
+#let tg = math.op("tg")
+
+/// Cossecante — exibe "csc".
+///
+/// Uso: `$csc(x)$`
+#let csc = math.op("csc")
+
+/// Cotangente — exibe "ctg" em vez de "cot".
+///
+/// Uso: `$ctg(x)$`
+#let ctg = math.op("ctg")
+
+/// Arco seno — exibe "arcsen" em vez de "arcsin".
+///
+/// Uso: `$arcsen(x)$`
+#let arcsen = math.op("arcsen")
+
+/// Arco cosseno — exibe "arccos".
+///
+/// Uso: `$arccos(x)$`
+#let arccos = math.op("arccos")
+
+/// Arco tangente — exibe "arctg" em vez de "arctan".
+///
+/// Uso: `$arctg(x)$`
+#let arctg = math.op("arctg")
+
+/// Seno hiperbólico — exibe "senh" em vez de "sinh".
+///
+/// Uso: `$senh(x)$`
+#let senh = math.op("senh")
+
+/// Tangente hiperbólica — exibe "tgh" em vez de "tanh".
+///
+/// Uso: `$tgh(x)$`
+#let tgh = math.op("tgh")
+
+// ============================================================================
+// Operadores matemáticos em português
+// ============================================================================
+
+/// Máximo divisor comum — exibe "mdc" em vez de "gcd".
+///
+/// Uso: `$mdc(a, b)$`
+#let mdc = math.op("mdc")
+
+/// Mínimo múltiplo comum — exibe "mmc" em vez de "lcm".
+///
+/// Uso: `$mmc(a, b)$`
+#let mmc = math.op("mmc")
+
+/// Grau/graus — símbolo ° (wrapper para `degree`).
+/// Ambas as formas existem para permitir português correto: `$90 graus$`.
+///
+/// Uso: `$90 graus$`, `$angulo A B C = 45 graus$`
+#let grau = sym.degree
+#let graus = sym.degree
+
+/// Resto (módulo) — exibe "mod".
+///
+/// Uso: `$a resto b$`, `$17 resto 5 = 2$`
+#let resto = math.op("mod")
+
+/// Ângulo — símbolo ∠ com variantes em português.
+///
+/// - `angulo` — ∠ (ângulo padrão)
+/// - `angulo.arco` — ∡ (ângulo com arco)
+/// - `angulo.agudo` — ⦟ (ângulo agudo)
+/// - `angulo.reto` — ∟ (ângulo reto)
+/// - `angulo.esferico` — ∢ (ângulo esférico)
+///
+/// Uso: `$angulo A B C$`, `$angulo.reto$`
+#let angulo = symbol("∠", ("arco", "∡"), ("agudo", "⦟"), ("reto", "∟"), ("esferico", "∢"))
+
 /// Fração com parâmetro `estilo` em português.
 /// Wrapper sobre `math.frac()`.
 ///
@@ -303,9 +380,9 @@
 ///
 /// Uso:
 /// ```typst
-/// $exibicao(sum_(i=1)^n x_i)$
+/// $destaque(sum_(i=1)^n x_i)$
 /// ```
-#let exibicao(corpo, compacto: false) = {
+#let destaque(corpo, compacto: false) = {
   math.display(corpo, cramped: compacto)
 }
 
@@ -947,4 +1024,79 @@
   ("diagonal", "⋱"),
   ("diagonal.w", "⋰"),
 )
+
+/// Sobre-chave — wrapper sobre `math.overbrace()`.
+///
+/// Uso: `$sobreChave(a + b + c, "n termos")$`
+#let sobreChave(corpo, ..args) = math.overbrace(corpo, ..args)
+
+/// Sub-chave — wrapper sobre `math.underbrace()`.
+///
+/// Uso: `$subChave(x_1 + x_2 + dots + x_n, "soma")$`
+#let subChave(corpo, ..args) = math.underbrace(corpo, ..args)
+
+/// Sobre-linha — wrapper sobre `math.overline()`.
+///
+/// Uso: `$sobreLinha(A B)$`
+#let sobreLinha(..args) = math.overline(..args)
+
+/// Sub-linha — wrapper sobre `math.underline()`.
+///
+/// Uso: `$subLinha(x + y)$`
+#let subLinha(..args) = math.underline(..args)
+
+/// Acento chapéu — wrapper para `math.hat()`.
+///
+/// Uso: `$chapeu(x)$`
+#let chapeu(corpo) = math.hat(corpo)
+
+/// Acento ponto — wrapper para `math.dot()`.
+///
+/// Uso: `$ponto(x)$`
+#let ponto(corpo) = math.dot(corpo)
+
+/// Acento ponto duplo — wrapper para `math.dot.double()`.
+///
+/// Uso: `$pontoDuplo(x)$`
+#let pontoDuplo(corpo) = math.dot.double(corpo)
+
+/// Acento traço (mácron) — wrapper para `math.macron()`.
+///
+/// Uso: `$traco(x)$`
+#let traco(corpo) = math.macron(corpo)
+
+/// Chapéu largo — wrapper sobre `math.accent()` com hat.
+/// Diferente de `hat()` que cobre apenas um caractere,
+/// `chapeuLargo()` se estende sobre todo o conteúdo.
+///
+/// Uso: `$chapeuLargo(A B C)$`
+#let chapeuLargo(corpo) = math.accent(corpo, math.hat)
+
+/// Til largo — wrapper sobre `math.accent()` com tilde.
+///
+/// Uso: `$tilLargo(A B C)$`
+#let tilLargo(corpo) = math.accent(corpo, math.tilde)
+
+/// Função por partes com alinhamento à direita.
+/// Usa `lr` + `mat` internamente para alinhar a primeira coluna à direita.
+/// Linhas separadas por `;`, colunas por `,`.
+///
+/// - delim: delimitador esquerdo (`"{"` ou `"["`)
+/// - gap: espaço entre colunas (padrão `0.5em`)
+///
+/// Uso: `$f(x) = porPartes(x, se x > 0; 0, se x = 0; -x, se x < 0)$`
+#let porPartes(delim: "{", gap: 0.5em, ..args) = {
+  let m = math.mat(delim: none, align: right, column-gap: gap, ..args)
+  if delim == "[" {
+    math.lr($bracket.l #m$)
+  } else {
+    math.lr($brace.l #m$)
+  }
+}
+
+/// Operador textual "se" para uso em funções por partes.
+/// Inclui espaço extra após a palavra para equilibrar o espaçamento visual.
+///
+/// Uso: `$porPartes(x, se x > 0; -x, se x < 0)$`
+#let se = { math.op("se"); h(0.3em) }
 

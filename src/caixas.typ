@@ -28,7 +28,7 @@
   body,
   titulo: none,
   cor: blue,
-  borda: "left",
+  borda: "esquerda",
   espessura: 2pt,
   raio: 0pt,
   preenchimento: auto,
@@ -41,11 +41,11 @@
   let bg = if preenchimento == auto { cor.lighten(92%) } else { preenchimento }
   let titulo-bg = if titulo-fundo == auto { cor.lighten(80%) } else { titulo-fundo }
 
-  let stroke = if borda == "left" {
+  let stroke = if borda == "esquerda" or borda == "left" {
     (left: espessura + cor)
-  } else if borda == "top" {
+  } else if borda == "topo" or borda == "top" {
     (top: espessura + cor)
-  } else if borda == "full" {
+  } else if borda == "completa" or borda == "full" {
     espessura + cor
   } else {
     none
@@ -94,7 +94,7 @@
 
 #let caixa-estilo(
   cor: blue,
-  borda: "left",
+  borda: "esquerda",
   espessura: 2pt,
   raio: 0pt,
   preenchimento: auto,
