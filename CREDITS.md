@@ -2,17 +2,17 @@
 
 ## Uma breve introdução ao LaTeX 2ε
 
-O **Matypst** é uma adaptação do trabalho original **"Breve Introdução ao LaTeX 2ε"** do professor **Lenimar Nunes de Andrade**, do Departamento de Matemática da Universidade Federal da Paraíba.
+O **FerrMat** é uma adaptação do trabalho original **"Breve Introdução ao LaTeX 2ε"** do professor **Lenimar Nunes de Andrade**, do Departamento de Matemática da Universidade Federal da Paraíba.
 
-O trabalho original, disponível em ftp://mat.ufpb.br/pub/textos/tex/, é um tutorial didático que há décadas auxilia estudantes brasileiros a aprenderem LaTeX. O Matypst transpõe esse excelente material para o contexto do Typst, oferecendo funções matemáticas em português, caixas decorativas, ambientes de teoremas e estilização de código.
+O trabalho original, disponível em ftp://mat.ufpb.br/pub/textos/tex/, é um tutorial didático que há décadas auxilia estudantes brasileiros a aprenderem LaTeX. O FerrMat transpõe esse excelente material para o contexto do Typst, oferecendo funções matemáticas em português, caixas decorativas, ambientes de teoremas e estilização de código.
 
 Agradecemos ao professor Lenimar Nunes de Andrade pela contribuição inestimável à comunidade acadêmica brasileira e por disponibilizar seu trabalho livremente.
 
 ---
 
-## ABNTypst
+## ABNTyp
 
-O Matypst é o pacote companheiro do **[ABNTypst](https://github.com/3sdras/ABNTypst)**, que cuida da formatação conforme normas ABNT. Enquanto o ABNTypst é uma adaptação do projeto abnTeX2, o Matypst fornece componentes visuais e matemáticos independentes de normas, que podem ser usados em qualquer documento Typst.
+O FerrMat é o pacote companheiro do **[ABNTyp](https://github.com/3sdras/abntyp)**, que cuida da formatação conforme normas ABNT. Enquanto o ABNTyp é uma adaptação do projeto abnTeX2, o FerrMat fornece componentes visuais e matemáticos independentes de normas, que podem ser usados em qualquer documento Typst.
 
 ---
 
@@ -20,17 +20,17 @@ O Matypst é o pacote companheiro do **[ABNTypst](https://github.com/3sdras/ABNT
 
 ### Claude Code
 
-O **[Claude Code](https://claude.ai/claude-code)** é uma ferramenta de programação assistida por IA da Anthropic. O código do Matypst, incluindo as funções, documentação e o documento `introducao-matypst.typ`, foi desenvolvido via Claude Code (modelo Claude Opus 4.5/4.6).
+O **[Claude Code](https://claude.ai/claude-code)** é uma ferramenta de programação assistida por IA da Anthropic. O código do FerrMat, incluindo as funções, documentação e o documento `introducao-matypst.typ`, foi desenvolvido via Claude Code (modelo Claude Opus 4.5/4.6).
 
 ### Typst
 
-O **[Typst](https://typst.app)** é o sistema de tipografia sobre o qual o Matypst foi construído. Agradecemos à equipe Typst pelo excelente trabalho.
+O **[Typst](https://typst.app)** é o sistema de tipografia sobre o qual o FerrMat foi construído. Agradecemos à equipe Typst pelo excelente trabalho.
 
 ---
 
 ## Licença
 
-O Matypst é distribuído sob a licença **MIT**, que permite uso, modificação e redistribuição livre, desde que mantidos os créditos apropriados.
+O FerrMat é distribuído sob a licença **MIT**, que permite uso, modificação e redistribuição livre, desde que mantidos os créditos apropriados.
 
 ```
 MIT License

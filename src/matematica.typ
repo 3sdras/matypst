@@ -714,13 +714,13 @@
 /// Uso: `$teta$`, `$teta.alt$`
 #let teta = symbol("θ", ("alt", "ϑ"))
 
-/// Capa (κ) com variante cursiva.
+/// Kapa (κ) com variante cursiva.
 ///
-/// - `capa` → κ
-/// - `capa.alt` → ϰ
+/// - `kapa` → κ
+/// - `kapa.alt` → ϰ
 ///
-/// Uso: `$capa$`
-#let capa = symbol("κ", ("alt", "ϰ"))
+/// Uso: `$kapa$`
+#let kapa = symbol("κ", ("alt", "ϰ"))
 
 /// Mi (μ).
 ///

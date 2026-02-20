@@ -1,5 +1,5 @@
 // =============================================================================
-// cronograma.typ — Módulo de gráfico de Gantt para matypst
+// cronograma.typ — Módulo de gráfico de Gantt para ferrmat
 // Usa CeTZ como engine de desenho
 // =============================================================================
 

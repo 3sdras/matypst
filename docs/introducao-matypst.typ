@@ -1,13 +1,13 @@
-// Breve Introdução ao Matypst
-// Documentação do pacote Matypst
+// Breve Introdução ao FerrMat
+// Documentação do pacote FerrMat
 // Caixas decorativas, ambientes matemáticos e código estilizado para Typst
 // Adaptado de "Breve Introdução ao LaTeX 2ε" de Lenimar Nunes de Andrade
 
 #import "../lib.typ": *
 
-// --- Setup standalone (sem dependência do ABNTypst) ---
+// --- Setup standalone (sem dependência do ABNTyp) ---
 
-#set document(title: "Breve Introdução ao Matypst", author: "Matypst")
+#set document(title: "Breve Introdução ao FerrMat", author: "FerrMat")
 
 #set page(paper: "a4", margin: (top: 3cm, bottom: 2cm, left: 3cm, right: 2cm))
 
@@ -82,7 +82,7 @@
 #show "LaTeX": LaTeX
 
 // Função auxiliar para exemplos numerados
-// Usa nome diferente de `exemplo` para evitar colisão com o ambiente matemático do Matypst
+// Usa nome diferente de `exemplo` para evitar colisão com o ambiente matemático do FerrMat
 // NOTA: cada exemplo aparece 2x (raw + chamada real) porque eval() em Typst não herda
 // imports do módulo. Ao editar exemplos, manter ambas as cópias sincronizadas.
 #let exemplo-doc-counter = counter("exemplo-doc")
@@ -112,7 +112,7 @@
 
   #v(0.5cm)
 
-  #text(size: 36pt, weight: "bold")[Matypst]
+  #text(size: 36pt, weight: "bold")[FerrMat]
 
   #v(0.5cm)
 
@@ -187,22 +187,22 @@
 
 Estas notas são uma adaptação do trabalho original "Uma breve introdução ao $"LaTeX" 2 epsilon$", de Lenimar Nunes de Andrade, para o caso do Typst, com o objetivo de servir de material didático para a disciplina "Software Livre para digitação de textos matemáticos" na UFJ.
 
-O *Matypst* é um pacote companheiro do ABNTypst, fornecendo utilitários genéricos para Typst que não dependem de normas ABNT: caixas decorativas, ambientes matemáticos com numeração automática, estilização de código e funções matemáticas em português.
+O *FerrMat* é um pacote companheiro do ABNTyp, fornecendo utilitários genéricos para Typst que não dependem de normas ABNT: caixas decorativas, ambientes matemáticos com numeração automática, estilização de código e funções matemáticas em português.
 
-Enquanto o ABNTypst cuida da formatação conforme normas ABNT (capa, folha de rosto, citações, referências), o Matypst oferece componentes visuais e matemáticos que podem ser usados em qualquer documento Typst --- com ou sem ABNTypst.
+Enquanto o ABNTyp cuida da formatação conforme normas ABNT (capa, folha de rosto, citações, referências), o FerrMat oferece componentes visuais e matemáticos que podem ser usados em qualquer documento Typst --- com ou sem ABNTyp.
 
-O Capítulo 1 introduz os conceitos básicos do Typst e do Matypst. O Capítulo 2 cobre as caixas decorativas (`caixa` e `caixa-estilo`). O Capítulo 3 trata da estilização de código (`codigo-inline` e `codigo-bloco`).
+O Capítulo 1 introduz os conceitos básicos do Typst e do FerrMat. O Capítulo 2 cobre as caixas decorativas (`caixa` e `caixa-estilo`). O Capítulo 3 trata da estilização de código (`codigo-inline` e `codigo-bloco`).
 
 O Capítulo 4 apresenta os fundamentos do modo matemático em Typst. O Capítulo 5 apresenta as funções matemáticas em português: letras gregas, frações, raízes, derivadas, integrais, matrizes e delimitadores. O Capítulo 6 cobre os ambientes matemáticos (teoremas, definições, demonstrações) com numeração configurável e estilos visuais. O Capítulo 7 aborda diagramas e gráficos com os pacotes `fletcher`, `cetz` e `cetz-plot`.
 
-O Apêndice A contém tabelas de referência para todos os símbolos matemáticos em português fornecidos pelo Matypst.
+O Apêndice A contém tabelas de referência para todos os símbolos matemáticos em português fornecidos pelo FerrMat.
 
 #v(1cm)
 
 #align(right)[
   Jataí, janeiro de 2026
 
-  _Equipe Matypst_
+  _Equipe FerrMat_
 ]
 
 #pagebreak()
@@ -232,9 +232,9 @@ As principais vantagens do Typst sobre o LaTeX são:
 - *Instalação fácil*: Um único executável, sem dependências complexas
 - *Webapp disponível*: Pode ser usado diretamente no navegador sem instalar nada
 
-== O que é o Matypst
+== O que é o FerrMat
 
-O Matypst é um pacote para Typst que fornece três funcionalidades principais:
+O FerrMat é um pacote para Typst que fornece três funcionalidades principais:
 
 + *Caixas decorativas* --- blocos visuais configuráveis com título, cor, borda e estilos reutilizáveis (similar ao `tcolorbox` do LaTeX).
 
@@ -242,7 +242,7 @@ O Matypst é um pacote para Typst que fornece três funcionalidades principais:
 
 + *Matemática em português* --- operadores (`sen`), letras gregas (`alfa`, `gama`, `teta`), frações (`fracao`), raízes (`raiz`), derivadas (`leibniz`, `parcial`), integrais, matrizes, delimitadores, vetores e ambientes matemáticos (teoremas, definições, demonstrações) com numeração automática.
 
-O Matypst é o pacote companheiro do ABNTypst, mas não depende dele. Pode ser usado em qualquer documento Typst.
+O FerrMat é o pacote companheiro do ABNTyp, mas não depende dele. Pode ser usado em qualquer documento Typst.
 
 == Usando o Typst
 
@@ -257,9 +257,9 @@ O webapp oferece:
 - Colaboração em tempo real (similar ao Google Docs)
 - Acesso a pacotes da comunidade
 
-Para usar o Matypst no webapp, basta importar o pacote no início do documento:
+Para usar o FerrMat no webapp, basta importar o pacote no início do documento:
 
-#raw(block: true, lang: "typst", "#import \"@preview/matypst:0.1.0\": *")
+#raw(block: true, lang: "typst", "#import \"@preview/ferrmat:0.1.0\": *")
 
 === Instalação local (CLI)
 
@@ -310,10 +310,10 @@ Vejamos o documento Typst mais simples possível:
 
 Este código acima produz um documento de uma página contendo apenas "Olá, mundo!".
 
-Para um documento usando Matypst, o exemplo mínimo seria:
+Para um documento usando FerrMat, o exemplo mínimo seria:
 
 #exemplo-doc[
-  #raw(block: true, lang: "typst", "#import \"@preview/matypst:0.1.0\": *
+  #raw(block: true, lang: "typst", "#import \"@preview/ferrmat:0.1.0\": *
 
 #set page(paper: \"a4\", margin: 2cm)
 #set text(lang: \"pt\", size: 12pt)
@@ -329,11 +329,11 @@ $sen(x)$, $fracao(a, b)$, $raiz(2)$
 #definicao[Um anel é um conjunto munido de duas operações...]")
 ]
 
-Para usar o Matypst junto com o ABNTypst:
+Para usar o FerrMat junto com o ABNTyp:
 
 #exemplo-doc[
-  #raw(block: true, lang: "typst", "#import \"@preview/abntypst:0.1.0\": *
-#import \"@preview/matypst:0.1.0\": *
+  #raw(block: true, lang: "typst", "#import \"@preview/abntyp:0.1.0\": *
+#import \"@preview/ferrmat:0.1.0\": *
 
 #show: abntcc.with(
   titulo: \"Meu TCC\",
@@ -355,7 +355,7 @@ Um documento Typst pode ser dividido em três partes:
 
 #exemplo-doc[
   #raw(block: true, lang: "typst", "// 1. Preâmbulo (importações)
-#import \"@preview/matypst:0.1.0\": *
+#import \"@preview/ferrmat:0.1.0\": *
 
 // 2. Configuração
 #set page(paper: \"a4\", margin: 2cm)
@@ -533,7 +533,7 @@ Ao usar o typst.app, a compilação e visualização são automáticas. Ao usar 
 
 = Caixas Decorativas
 
-O Matypst fornece duas funções para criar blocos visuais: `caixa()` para uso direto e `caixa-estilo()` para criar estilos reutilizáveis.
+O FerrMat fornece duas funções para criar blocos visuais: `caixa()` para uso direto e `caixa-estilo()` para criar estilos reutilizáveis.
 
 == Caixa básica
 
@@ -571,7 +571,7 @@ A função `caixa()` cria um bloco visual com fundo colorido e borda configuráv
   kind: table,
 )
 
-O parâmetro `cor` aceita qualquer cor do Typst. O Matypst fornece nomes em português para todas as cores nativas:
+O parâmetro `cor` aceita qualquer cor do Typst. O FerrMat fornece nomes em português para todas as cores nativas:
 
 #figure(
   table(
@@ -709,7 +709,7 @@ A função `caixa-estilo()` retorna uma closure (função) que pode ser usada re
   contador: \"nota\",
 )
 
-#nota[Primeira nota: lembre-se de importar o Matypst.]
+#nota[Primeira nota: lembre-se de importar o FerrMat.]
 
 #nota[Segunda nota: a numeração é automática.]
 
@@ -731,7 +731,7 @@ A função `caixa-estilo()` retorna uma closure (função) que pode ser usada re
   contador: "nota",
 )
 
-#nota[Primeira nota: lembre-se de importar o Matypst.]
+#nota[Primeira nota: lembre-se de importar o FerrMat.]
 
 #nota[Segunda nota: a numeração é automática.]
 
@@ -751,7 +751,7 @@ A função `caixa-estilo()` retorna uma closure (função) que pode ser usada re
 
 = Estilização de Código
 
-O Matypst fornece duas funções para exibir código-fonte com formatação visual.
+O FerrMat fornece duas funções para exibir código-fonte com formatação visual.
 
 == Código inline
 
@@ -760,12 +760,12 @@ A função `codigo-inline()` exibe código no meio do texto, com fundo destacado
 #exemplo-doc[
   #raw(block: true, lang: "typst", "O comando #codigo-inline(`print(\"hello\")`) imprime uma saudação.
 
-Use #codigo-inline(`pip install matypst`) para instalar.")
+Use #codigo-inline(`pip install ferrmat`) para instalar.")
 ]
 
 O comando #codigo-inline(`print("hello")`) imprime uma saudação.
 
-Use #codigo-inline(`pip install matypst`) para instalar.
+Use #codigo-inline(`pip install ferrmat`) para instalar.
 
 #figure(
   table(
@@ -811,7 +811,7 @@ def fibonacci(n):
   titulo: \"main.rs\",
   ```
 fn main() {
-    println!(\"Hello, matypst!\");
+    println!(\"Hello, ferrmat!\");
 }
 ```.text,
 )")
@@ -822,7 +822,7 @@ fn main() {
   titulo: "main.rs",
   ```
 fn main() {
-    println!("Hello, matypst!");
+    println!("Hello, ferrmat!");
 }
 ```.text,
 )
@@ -1151,7 +1151,7 @@ $
 
 == Função por partes
 
-O matypst fornece `porPartes()` para definir funções por partes com alinhamento à direita. As linhas são separadas por `;` e as colunas por `,`. O operador `se` permite escrever as condições sem aspas:
+O FerrMat fornece `porPartes()` para definir funções por partes com alinhamento à direita. As linhas são separadas por `;` e as colunas por `,`. O operador `se` permite escrever as condições sem aspas:
 
 #exemplo-doc[
   #raw(block: true, lang: "typst", "$ f(x) = porPartes(
@@ -1188,7 +1188,7 @@ $ n! = porPartes(delim: "[",
   fill: eastern.lighten(95%),
 )[
   #set par(first-line-indent: 0pt)
-  *Nota:* O operador `se` é definido como `math.op("se")` com espaço extra, renderizando em fonte romana com espaçamento equilibrado. Sem o matypst, seria necessário usar `cases()` com `"se"` entre aspas. Como consequência, o produto das variáveis _s_ e _e_ deve ser escrito como `s dot e` ou `s e` (com espaço) --- mas na prática essa colisão é rara.
+  *Nota:* O operador `se` é definido como `math.op("se")` com espaço extra, renderizando em fonte romana com espaçamento equilibrado. Sem o FerrMat, seria necessário usar `cases()` com `"se"` entre aspas. Como consequência, o produto das variáveis _s_ e _e_ deve ser escrito como `s dot e` ou `s e` (com espaço) --- mas na prática essa colisão é rara.
 
   O espaçamento entre colunas pode ser ajustado com o parâmetro `gap` (padrão: `0.5em`).
 ]
@@ -1243,7 +1243,7 @@ As funções `sobreChave()` e `subChave()` são wrappers para `overbrace()` e `u
 
 === Acentos matemáticos
 
-O matypst fornece wrappers em português para os acentos matemáticos:
+O FerrMat fornece wrappers em português para os acentos matemáticos:
 
 #exemplo-doc[
   #raw(block: true, lang: "typst", "$ chapeu(x), tilde(x), ponto(x), pontoDuplo(x), traco(x) $")
@@ -1263,7 +1263,7 @@ $ chapeuLargo(A B C), tilLargo(x + y) $
 
 == Notação de ângulo
 
-O matypst fornece `angulo` (wrapper para `angle`) com variantes em português, e `grau`/`graus` (wrapper para `degree`):
+O FerrMat fornece `angulo` (wrapper para `angle`) com variantes em português, e `grau`/`graus` (wrapper para `degree`):
 
 #exemplo-doc[
   #raw(block: true, lang: "typst", "$ angulo A B C = 90 graus $
@@ -1281,7 +1281,7 @@ Todas as variantes de `angulo`:
   table(
     columns: 3,
     align: (left, center, left),
-    table.header[*matypst*][*Símbolo*][*Typst nativo*],
+    table.header[*FerrMat*][*Símbolo*][*Typst nativo*],
     [`angulo`], [$angulo$], [`angle`],
     [`angulo.arco`], [$angulo.arco$], [`angle.arc`],
     [`angulo.agudo`], [$angulo.agudo$], [`angle.acute`],
@@ -1300,11 +1300,11 @@ Todas as variantes de `angulo`:
 
 = Matemática em Português
 
-O Matypst fornece funções que traduzem operadores, símbolos e construções matemáticas do Typst para o português. Todas as funções são wrappers sobre os equivalentes nativos --- não adicionam funcionalidade nova, apenas tornam o código mais natural para falantes de português.
+O FerrMat fornece funções que traduzem operadores, símbolos e construções matemáticas do Typst para o português. Todas as funções são wrappers sobre os equivalentes nativos --- não adicionam funcionalidade nova, apenas tornam o código mais natural para falantes de português.
 
 == Operadores
 
-O Matypst fornece o operador `sen` (seno em português), que substitui o `sin` padrão do Typst:
+O FerrMat fornece o operador `sen` (seno em português), que substitui o `sin` padrão do Typst:
 
 #exemplo-doc[
   #raw(block: true, lang: "typst", "$sen(x)$, $cos(x)$, $tan(x)$
@@ -1324,7 +1324,7 @@ As demais funções (`cos`, `tan`, `log`, `ln`, `exp`, `lim`, `max`, `min`) são
     columns: (auto, auto, 1fr),
     inset: 6pt,
     table.hline(stroke: 1pt),
-    [*Matypst*], [*Typst*], [*Exemplo*],
+    [*FerrMat*], [*Typst*], [*Exemplo*],
     table.hline(stroke: 0.5pt),
     [`sen`], [`sin`], [$sen(x)$],
     [`tg`], [`tan`], [$tg(x)$],
@@ -1350,7 +1350,7 @@ As funções `cos`, `cosh`, `sec` e `cot` já possuem o mesmo nome em português
     columns: (auto, auto, 1fr),
     inset: 6pt,
     table.hline(stroke: 1pt),
-    [*Matypst*], [*Typst*], [*Descrição*],
+    [*FerrMat*], [*Typst*], [*Descrição*],
     table.hline(stroke: 0.5pt),
     [`mdc`], [`gcd`], [Máximo divisor comum],
     [`mmc`], [`lcm`], [Mínimo múltiplo comum],
@@ -1372,7 +1372,7 @@ Os seguintes operadores já possuem nome universal e não precisam de wrapper: `
     columns: (auto, auto, 1fr),
     inset: 6pt,
     table.hline(stroke: 1pt),
-    [*Matypst*], [*Typst*], [*Descrição*],
+    [*FerrMat*], [*Typst*], [*Descrição*],
     table.hline(stroke: 0.5pt),
     [`sobreLinha`], [`overline`], [Barra superior],
     [`subLinha`], [`underline`], [Barra inferior],
@@ -1388,7 +1388,7 @@ Os seguintes operadores já possuem nome universal e não precisam de wrapper: `
 
 == Letras gregas
 
-O Matypst fornece nomes em português para as letras gregas que diferem do inglês. As letras que já possuem o mesmo nome em ambas as línguas (`beta`, `delta`, `epsilon`, `zeta`, `eta`, `iota`, `lambda`, `pi`, `sigma`, `tau`, `psi`, `omega`) podem ser usadas diretamente.
+O FerrMat fornece nomes em português para as letras gregas que diferem do inglês. As letras que já possuem o mesmo nome em ambas as línguas (`beta`, `delta`, `epsilon`, `zeta`, `eta`, `iota`, `lambda`, `pi`, `sigma`, `tau`, `psi`, `omega`) podem ser usadas diretamente.
 
 #figure(
   table(
@@ -1401,7 +1401,7 @@ O Matypst fornece nomes em português para as letras gregas que diferem do ingl�
     [`alfa`], [$alfa$], [`beta`], [$beta$], [`gama`], [$gama$],
     [`delta`], [$delta$], [`epsilon`], [$epsilon$], [`zeta`], [$zeta$],
     [`eta`], [$eta$], [`teta`], [$teta$], [`iota`], [$iota$],
-    [`capa`], [$capa$], [`lambda`], [$lambda$], [`mi`], [$mi$],
+    [`kapa`], [$kapa$], [`lambda`], [$lambda$], [`mi`], [$mi$],
     [`ni`], [$ni$], [`csi`], [$csi$], [`pi`], [$pi$],
     [`ro`], [$ro$], [`sigma`], [$sigma$], [`tau`], [$tau$],
     [`ipsilon`], [$ipsilon$], [`fi`], [$fi$], [`qui`], [$qui$],
@@ -1422,7 +1422,7 @@ Quatro letras possuem variantes cursivas acessíveis com `.alt`:
     table.hline(stroke: 1pt),
     [*Código*], [*Letra*], [*Código*], [*Letra*], [*Código*], [*Letra*], [*Código*], [*Letra*],
     table.hline(stroke: 0.5pt),
-    [`teta.alt`], [$teta.alt$], [`capa.alt`], [$capa.alt$], [`ro.alt`], [$ro.alt$], [`fi.alt`], [$fi.alt$],
+    [`teta.alt`], [$teta.alt$], [`kapa.alt`], [$kapa.alt$], [`ro.alt`], [$ro.alt$], [`fi.alt`], [$fi.alt$],
     table.hline(stroke: 1pt),
   ),
   caption: [Variantes cursivas],
@@ -1590,7 +1590,7 @@ $ lim_(x -> 0^+) ln x = -infinito $
 
 == Derivadas
 
-O Matypst fornece `leibniz()` para a notação de Leibniz e `parcial()` para derivadas parciais.
+O FerrMat fornece `leibniz()` para a notação de Leibniz e `parcial()` para derivadas parciais.
 
 Em `leibniz`, a ordem é o terceiro argumento: `leibniz(y, x, 2)`. Em `parcial`, a ordem precisa ser nomeada (`ordem: 2`) para não ser confundida com uma segunda variável --- `parcial(f, x, y)` é a derivada mista $partial^2 f \/ partial x partial y$.
 
@@ -1639,7 +1639,7 @@ $ integral_a^b f(x) dif x quad quad integral.dupla_D f(x,y) dif x dif y quad qua
   table(
     columns: 3,
     align: (left, center, left),
-    table.header[*matypst*][*Símbolo*][*Descrição*],
+    table.header[*FerrMat*][*Símbolo*][*Descrição*],
     [`integral`], [$integral$], [Integral simples],
     [`integral.dupla`], [$integral.dupla$], [Integral dupla],
     [`integral.tripla`], [$integral.tripla$], [Integral tripla],
@@ -1707,7 +1707,7 @@ $vetor(v)$, $vetor(A B)$, $vetorNegrito(v)$, $vetorNegrito(F)$, $conjugado(z)$, 
 
 == Matrizes e determinantes
 
-O Matypst fornece quatro funções para matrizes, cada uma com seu delimitador:
+O FerrMat fornece quatro funções para matrizes, cada uma com seu delimitador:
 
 - `matriz()` --- parênteses $(med)$
 - `colchete()` --- colchetes $[med]$
@@ -1732,14 +1732,14 @@ $ matriz(a, b; c, d) quad colchete(1, 2, 3; 4, 5, 6) quad barra(a, b; c, d) quad
 
 == Tamanhos: destaque vs. inline
 
-No Typst, equações entre `$ ... $` (com espaço) ficam em _destaque_ e equações `$...$` (sem espaço) ficam _inline_. O Matypst oferece funções para forçar o tamanho:
+No Typst, equações entre `$ ... $` (com espaço) ficam em _destaque_ e equações `$...$` (sem espaço) ficam _inline_. O FerrMat oferece funções para forçar o tamanho:
 
 #figure(
   table(
     columns: (auto, auto, 1fr),
     inset: 6pt,
     table.hline(stroke: 1pt),
-    [*Matypst*], [*LaTeX*], [*Descrição*],
+    [*FerrMat*], [*LaTeX*], [*Descrição*],
     table.hline(stroke: 0.5pt),
     [`destaque()`], [`\displaystyle`], [Força tamanho de destaque (o maior)],
     [`emLinha()`], [`\textstyle`], [Força tamanho inline],
@@ -1774,7 +1774,7 @@ Sem `destaque`: temos $sum_(i=1)^n x_i$ como resultado. Com `destaque`: temos $d
 
 = Ambientes Matemáticos
 
-O Matypst fornece 14 ambientes matemáticos pré-configurados com caixas coloridas, numeração automática e três estilos visuais.
+O FerrMat fornece 14 ambientes matemáticos pré-configurados com caixas coloridas, numeração automática e três estilos visuais.
 
 == Ambientes pré-configurados
 
@@ -1798,7 +1798,7 @@ O Matypst fornece 14 ambientes matemáticos pré-configurados com caixas colorid
     [`observacao`], [Informal], [maroon], [normal (sem numeração)],
     [`demonstracao`], [Informal], [---], [normal (com QED)],
   ),
-  caption: [Ambientes matemáticos disponíveis no Matypst],
+  caption: [Ambientes matemáticos disponíveis no FerrMat],
   kind: table,
 )
 
@@ -1948,7 +1948,7 @@ A função `num-equacao` aceita o parâmetro `nivel` com a mesma semântica. Use
 
 == Estilos visuais
 
-O Matypst suporta três estilos globais, controlados por `configurar-ambientes`:
+O FerrMat suporta três estilos globais, controlados por `configurar-ambientes`:
 
 #exemplo-doc[
   #raw(block: true, lang: "typst", "#configurar-ambientes(\"colorido\")  // padrão: cada ambiente com sua cor
@@ -2163,7 +2163,7 @@ Para gráficos mais elaborados ou interativos, o GeoGebra (#link("https://www.ge
 
 == Cronograma (Gantt)
 
-O Matypst inclui a função `#cronograma()` para criar gráficos de Gantt diretamente no documento Typst --- sem dependências externas pesadas e com aparência moderna: barras arredondadas (_pill-shaped_), fundo alternado entre linhas, cabeçalho com dois níveis (mês + semanas), indicador de progresso e linha "hoje".
+O FerrMat inclui a função `#cronograma()` para criar gráficos de Gantt diretamente no documento Typst --- sem dependências externas pesadas e com aparência moderna: barras arredondadas (_pill-shaped_), fundo alternado entre linhas, cabeçalho com dois níveis (mês + semanas), indicador de progresso e linha "hoje".
 
 É ideal para projetos de pesquisa, TCCs e relatórios técnicos, onde um cronograma visual substitui a tradicional tabela estática.
 
@@ -2576,6 +2576,173 @@ Os parâmetros de `tarefa()`:
   kind: table,
 )
 
+// ============================================================================
+// CAPÍTULO 8: CONFIGURAÇÃO DE PÁGINA EM PORTUGUÊS
+// ============================================================================
+
+#pagebreak()
+
+= Configuração de Página em Português
+
+O Typst usa nomes em inglês para as propriedades de `page()` e `pagebreak()`. O FerrMat oferece wrappers que traduzem esses nomes para português, facilitando a escrita de documentos sem precisar consultar a documentação em inglês.
+
+== `configurar-pagina` -- configurar a página
+
+A função `configurar-pagina` é usada como show-rule e aceita todos os parâmetros principais de `set page()` com nomes em português:
+
+```typst
+#show: configurar-pagina.with(
+  papel: "a4",
+  margem: (superior: 3cm, inferior: 2cm, esquerda: 3cm, direita: 2cm),
+  numeracao: "1",
+)
+```
+
+Equivalente nativo do Typst:
+
+```typst
+#set page(
+  paper: "a4",
+  margin: (top: 3cm, bottom: 2cm, left: 3cm, right: 2cm),
+  numbering: "1",
+)
+```
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 6pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro PT*], [*Original EN*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`papel`], [`paper`], [Tamanho do papel: `"a4"`, `"a5"`, `"us-letter"`, etc.],
+    [`largura`], [`width`], [Largura da página (alternativa a `papel`).],
+    [`altura`], [`height`], [Altura da página (alternativa a `papel`).],
+    [`margem`], [`margin`], [Margens. Valor único (ex: `2cm`) ou dicionário com chaves em PT.],
+    [`paisagem`], [`flipped`], [Se `true`, troca largura e altura (modo paisagem).],
+    [`colunas`], [`columns`], [Número de colunas de texto (padrão: 1).],
+    [`preenchimento`], [`fill`], [Cor de fundo da página.],
+    [`numeracao`], [`numbering`], [Padrão de numeração: `"1"`, `"i"`, `"a"`, `none`, etc.],
+    [`alinhamento-numero`], [`number-align`], [Alinhamento do número de página (ex: `center`).],
+    [`cabecalho`], [`header`], [Conteúdo do cabeçalho.],
+    [`rodape`], [`footer`], [Conteúdo do rodapé.],
+    [`pre-cabecalho`], [`header-ascent`], [Espaço entre o cabeçalho e o topo do corpo.],
+    [`pre-rodape`], [`footer-descent`], [Espaço entre o rodapé e a base do corpo.],
+    [`encadernacao`], [`binding`], [Lado da encadernação (`left` ou `right`).],
+    [`plano-de-fundo`], [`background`], [Conteúdo posicionado atrás do corpo.],
+    [`primeiro-plano`], [`foreground`], [Conteúdo posicionado à frente do corpo.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `configurar-pagina()`],
+  kind: table,
+)
+
+=== Chaves de margem em português
+
+Quando `margem` recebe um dicionário, as chaves podem ser em português:
+
+#figure(
+  table(
+    columns: (1fr, 1fr, 2fr),
+    stroke: none,
+    inset: 6pt,
+    table.hline(stroke: 1pt),
+    [*Chave PT*], [*Chave EN*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`superior`], [`top`], [Margem superior],
+    [`inferior`], [`bottom`], [Margem inferior],
+    [`esquerda`], [`left`], [Margem esquerda],
+    [`direita`], [`right`], [Margem direita],
+    [`interna`], [`inside`], [Margem interna (para encadernação)],
+    [`externa`], [`outside`], [Margem externa (para encadernação)],
+    [`resto`], [`rest`], [Valor padrão para chaves não especificadas],
+    [`x`], [`x`], [Atalho para esquerda + direita],
+    [`y`], [`y`], [Atalho para superior + inferior],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Chaves de margem em português],
+  kind: table,
+)
+
+As chaves originais em inglês também são aceitas, permitindo migração gradual.
+
+== `margem` -- helper para margens
+
+A função `margem()` constrói o dicionário de margens com parâmetros nomeados, evitando a sintaxe de dicionário:
+
+```typst
+// Com dicionário (funciona igualmente):
+#show: configurar-pagina.with(
+  margem: (superior: 3cm, inferior: 2cm, esquerda: 3cm, direita: 2cm),
+)
+
+// Com a função margem():
+#show: configurar-pagina.with(
+  margem: margem(superior: 3cm, inferior: 2cm, esquerda: 3cm, direita: 2cm),
+)
+```
+
+Para documentos com encadernação frente-e-verso, use `interna`/`externa` em vez de `esquerda`/`direita`:
+
+```typst
+#show: configurar-pagina.with(
+  margem: margem(superior: 3cm, inferior: 2cm, interna: 3cm, externa: 2cm),
+)
+```
+
+== `quebra-pagina` -- quebra de página
+
+Wrapper para `pagebreak()` com parâmetros em português:
+
+```typst
+#quebra-pagina()                       // quebra simples
+#quebra-pagina(fraco: true)            // só quebra se não estiver no topo
+#quebra-pagina(para: "impar")          // pula até a próxima página ímpar
+#quebra-pagina(para: "par")            // pula até a próxima página par
+```
+
+#figure(
+  table(
+    columns: (auto, auto, auto, 1fr),
+    stroke: none,
+    inset: 6pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro PT*], [*Original EN*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`fraco`], [`weak`], [`false`], [Se `true`, evita quebra se já estiver no topo da página.],
+    [`para`], [`to`], [`none`], [`"impar"` ou `"par"` para pular até página ímpar/par.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `quebra-pagina()`],
+  kind: table,
+)
+
+== Exemplo completo
+
+```typst
+#import "@preview/ferrmat:0.1.0": *
+
+#show: configurar-pagina.with(
+  papel: "a4",
+  margem: margem(superior: 3cm, inferior: 2cm, esquerda: 3cm, direita: 2cm),
+  numeracao: "1",
+  preenchimento: luma(252),
+  cabecalho: align(right)[Meu Documento],
+  rodape: align(center)[Página #context counter(page).display()],
+)
+
+= Introdução
+
+Conteúdo do documento...
+
+#quebra-pagina()
+
+= Segunda seção
+
+Mais conteúdo...
+```
+
 #pagebreak()
 
 // ============================================================================
@@ -2590,7 +2757,7 @@ Os parâmetros de `tarefa()`:
 
 == Operadores binários
 
-Os nomes em português são fornecidos pelo Matypst. Os símbolos nativos do Typst usam nomes em inglês (`times`, `plus.minus`, `and`, `union`, etc.).
+Os nomes em português são fornecidos pelo FerrMat. Os símbolos nativos do Typst usam nomes em inglês (`times`, `plus.minus`, `and`, `union`, etc.).
 
 #figure(
   table(
@@ -2614,7 +2781,7 @@ Os nomes em português são fornecidos pelo Matypst. Os símbolos nativos do Typ
 
 == Relações
 
-Os nomes em português (`aprox`, `pertence`, `estaContido`, `contem`, `proporcional`, etc.) são fornecidos pelo Matypst. Os símbolos nativos do Typst usam nomes em inglês (`approx`, `in`, `subset`, `supset`, `prop`, etc.).
+Os nomes em português (`aprox`, `pertence`, `estaContido`, `contem`, `proporcional`, etc.) são fornecidos pelo FerrMat. Os símbolos nativos do Typst usam nomes em inglês (`approx`, `in`, `subset`, `supset`, `prop`, etc.).
 
 #figure(
   table(
@@ -2639,7 +2806,7 @@ Os nomes em português (`aprox`, `pertence`, `estaContido`, `contem`, `proporcio
 
 == Setas
 
-As setas `->`, `<-` e `<->` são atalhos nativos do Typst. As demais (`implica`, `sse`, `seta.*`) são fornecidas pelo Matypst.
+As setas `->`, `<-` e `<->` são atalhos nativos do Typst. As demais (`implica`, `sse`, `seta.*`) são fornecidas pelo FerrMat.
 
 A função `seta` usa subcampos direcionais baseados nas teclas WASD: *w* = cima (↑), *a* = esquerda (←), *s* = baixo (↓), *d* = direita (→). Combinações como `seta.w.s` (↕) e `seta.a.d` (↔) indicam dupla direção.
 
@@ -2664,7 +2831,7 @@ A função `seta` usa subcampos direcionais baseados nas teclas WASD: *w* = cima
 
 == Símbolos diversos
 
-Os nomes em português (`infinito`, `vazio`, `portanto`, `pois`, `paraTodo`, `existe`, `nao`, `alef`, `reticencias`) são fornecidos pelo Matypst. Os equivalentes nativos do Typst são `infinity`, `emptyset`, `therefore`, `because`, `forall`, `exists`, `not`, `aleph`, `dots`.
+Os nomes em português (`infinito`, `vazio`, `portanto`, `pois`, `paraTodo`, `existe`, `nao`, `alef`, `reticencias`) são fornecidos pelo FerrMat. Os equivalentes nativos do Typst são `infinity`, `emptyset`, `therefore`, `because`, `forall`, `exists`, `not`, `aleph`, `dots`.
 
 #figure(
   table(
