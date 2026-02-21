@@ -119,3 +119,198 @@
     pagebreak(weak: fraco)
   }
 }
+
+// ---------------------------------------------------------------------------
+// numeracao-pagina — exibe o número da página atual
+// ---------------------------------------------------------------------------
+
+/// Exibe o número da página atual.
+/// - `formato`: formato de numeração (`"1"` arábico, `"i"` romano minúsculo, `"I"` romano maiúsculo)
+/// - `peso`: peso da fonte (ex: `"bold"`)
+#let numeracao-pagina(formato: "1", peso: auto) = {
+  context {
+    let num = counter(page).display(formato)
+    if peso != auto {
+      text(weight: peso, num)
+    } else {
+      num
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// marca-secao — marca corrente de seção (running header/titleps)
+// ---------------------------------------------------------------------------
+
+/// Retorna o título da seção mais recente no nível dado.
+/// Para uso dentro de `cabecalho()` ou `rodape()`.
+/// - `nivel`: nível do heading a buscar
+/// - `caixa`: `"alta"` (upper), `"baixa"` (lower), `none`
+/// - `peso`: peso da fonte
+/// - `estilo`: `"italic"`, `"normal"`
+/// - `com-numero`: incluir número da seção
+/// - `separador`: espaço entre número e título
+#let marca-secao(
+  nivel: 1,
+  caixa: none,
+  peso: auto,
+  estilo: auto,
+  com-numero: false,
+  separador: h(0.5em),
+) = {
+  context {
+    let found = query(heading.where(level: nivel).before(here()))
+    if found.len() == 0 { return }
+    let hdg = found.last()
+
+    let corpo = hdg.body
+    if caixa == "alta" { corpo = upper(corpo) }
+    else if caixa == "baixa" { corpo = lower(corpo) }
+
+    let resultado = if com-numero and hdg.numbering != none {
+      let nums = counter(heading).at(hdg.location())
+      let num-str = numbering(hdg.numbering, ..nums)
+      [#num-str#separador#corpo]
+    } else {
+      corpo
+    }
+
+    if peso != auto { resultado = text(weight: peso, resultado) }
+    if estilo == "italic" { resultado = emph(resultado) }
+
+    resultado
+  }
+}
+
+// ---------------------------------------------------------------------------
+// Utilitário interno: renderiza grid de 3 colunas para header/footer
+// ---------------------------------------------------------------------------
+
+#let _render-hf(esquerda, centro, direita, tamanho, fonte) = {
+  set text(size: tamanho)
+  if fonte != auto { set text(font: fonte) }
+  grid(
+    columns: (1fr, 1fr, 1fr),
+    align: (left, center, right),
+    if esquerda != none { esquerda } else { [] },
+    if centro != none { centro } else { [] },
+    if direita != none { direita } else { [] },
+  )
+}
+
+// ---------------------------------------------------------------------------
+// Utilitário interno: despacho par/ímpar para header/footer
+// ---------------------------------------------------------------------------
+
+#let _dispatch-hf(esquerda, centro, direita, impar, par, render) = {
+  let simple-mode = impar == auto and par == auto
+  if simple-mode {
+    render(esquerda, centro, direita)
+  } else {
+    context {
+      let pg = counter(page).get().first()
+      let is-odd = calc.odd(pg)
+      if is-odd and impar != auto {
+        let cfg = impar
+        render(
+          cfg.at("esquerda", default: none),
+          cfg.at("centro", default: none),
+          cfg.at("direita", default: none),
+        )
+      } else if not is-odd and par != auto {
+        let cfg = par
+        render(
+          cfg.at("esquerda", default: none),
+          cfg.at("centro", default: none),
+          cfg.at("direita", default: none),
+        )
+      } else {
+        render(esquerda, centro, direita)
+      }
+    }
+  }
+}
+
+// ---------------------------------------------------------------------------
+// cabecalho — gera conteúdo de header (fancyhdr)
+// ---------------------------------------------------------------------------
+
+/// Gera conteúdo para o cabeçalho da página.
+/// Modo simples: `cabecalho(esquerda: [...], direita: numeracao-pagina())`
+/// Modo par/ímpar: `cabecalho(impar: (direita: marca-secao()), par: (esquerda: [Título]))`
+/// - `linha`: espessura da linha separadora abaixo do cabeçalho
+#let cabecalho(
+  esquerda: none,
+  centro: none,
+  direita: none,
+  impar: auto,
+  par: auto,
+  linha: 0pt,
+  cor-linha: black,
+  distancia-linha: 0.3em,
+  tamanho: 10pt,
+  fonte: auto,
+) = {
+  let render(esq, cen, dir) = {
+    let content = _render-hf(esq, cen, dir, tamanho, fonte)
+    if linha > 0pt {
+      content
+      v(distancia-linha)
+      line(length: 100%, stroke: linha + cor-linha)
+    } else {
+      content
+    }
+  }
+  _dispatch-hf(esquerda, centro, direita, impar, par, render)
+}
+
+// ---------------------------------------------------------------------------
+// rodape — gera conteúdo de footer (fancyhdr)
+// ---------------------------------------------------------------------------
+
+/// Gera conteúdo para o rodapé da página.
+/// Mesma API que `cabecalho()`, mas a linha separadora fica *acima* do conteúdo.
+#let rodape(
+  esquerda: none,
+  centro: none,
+  direita: none,
+  impar: auto,
+  par: auto,
+  linha: 0pt,
+  cor-linha: black,
+  distancia-linha: 0.3em,
+  tamanho: 10pt,
+  fonte: auto,
+) = {
+  let render(esq, cen, dir) = {
+    if linha > 0pt {
+      line(length: 100%, stroke: linha + cor-linha)
+      v(distancia-linha)
+    }
+    _render-hf(esq, cen, dir, tamanho, fonte)
+  }
+  _dispatch-hf(esquerda, centro, direita, impar, par, render)
+}
+
+// ---------------------------------------------------------------------------
+// estilo-pagina — show-rule que aplica cabeçalho + rodapé + numeração
+// ---------------------------------------------------------------------------
+
+/// Atalho que aplica cabeçalho, rodapé e numeração de página de uma vez.
+/// Uso: `#show: estilo-pagina.with(cabecalho: cabecalho(...), rodape: rodape(...))`
+/// Campos `auto` são omitidos (não sobrescrevem configurações existentes).
+#let estilo-pagina(
+  cabecalho: auto,
+  rodape: auto,
+  numeracao: auto,
+  posicao-numero: auto,
+  corpo,
+) = {
+  let args = (:)
+  if cabecalho != auto { args.insert("header", cabecalho) }
+  if rodape != auto { args.insert("footer", rodape) }
+  if numeracao != auto { args.insert("numbering", numeracao) }
+  if posicao-numero != auto { args.insert("number-align", posicao-numero) }
+  set page(..args)
+  corpo
+}

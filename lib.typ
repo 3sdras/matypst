@@ -4,3 +4,4 @@
 #import "src/matematica.typ": *
 #import "src/cronograma.typ": *
 #import "src/pagina.typ": *
+#import "src/secoes.typ": *

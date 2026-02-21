@@ -7,7 +7,7 @@
 
 // --- Setup standalone (sem dependência do ABNTyp) ---
 
-#set document(title: "Breve Introdução ao FerrMat", author: "FerrMat")
+#set document(title: "Breve Introdução ao FerrMat — Ferramentas Matemáticas", author: "FerrMat")
 
 #set page(paper: "a4", margin: (top: 3cm, bottom: 2cm, left: 3cm, right: 2cm))
 
@@ -114,6 +114,10 @@
 
   #text(size: 36pt, weight: "bold")[FerrMat]
 
+  #v(0.3cm)
+
+  #text(size: 16pt, style: "italic")[Ferramentas Matemáticas]
+
   #v(0.5cm)
 
   #text(size: 14pt)[Caixas Decorativas, Ambientes Matemáticos]
@@ -208,7 +212,7 @@ O Apêndice A contém tabelas de referência para todos os símbolos matemático
 #pagebreak()
 
 // ============================================================================
-// CAPÍTULO 1: O QUE É O MATYPST
+// CAPÍTULO 1: O QUE É O FERRMAT
 // ============================================================================
 
 #counter(page).update(1)
@@ -2586,6 +2590,48 @@ Os parâmetros de `tarefa()`:
 
 O Typst usa nomes em inglês para as propriedades de `page()` e `pagebreak()`. O FerrMat oferece wrappers que traduzem esses nomes para português, facilitando a escrita de documentos sem precisar consultar a documentação em inglês.
 
+// Helper interno para mock-ups de páginas na documentação
+#let _pagina-mock(
+  cabecalho-esq, cabecalho-dir, conteudo-titulo, conteudo-texto,
+  rodape-esq, rodape-dir,
+  largura: 6cm,
+) = {
+  box(rect(
+    width: largura,
+    height: largura * 1.4142,
+    fill: white,
+    stroke: 0.5pt + luma(120),
+    inset: (x: 10pt, top: 8pt, bottom: 8pt),
+    {
+      set par(justify: false)
+      // Cabeçalho
+      grid(
+        columns: (1fr, 1fr),
+        align(left, text(size: 7pt)[#cabecalho-esq]),
+        align(right, text(size: 7pt)[#cabecalho-dir]),
+      )
+      v(3pt)
+      line(length: 100%, stroke: 0.3pt + luma(150))
+      v(1fr)
+      // Conteúdo
+      align(left, {
+        text(size: 11pt, weight: "bold")[#conteudo-titulo]
+        v(6pt)
+        text(size: 8pt)[#conteudo-texto]
+      })
+      v(1fr)
+      // Rodapé
+      line(length: 100%, stroke: 0.3pt + luma(150))
+      v(3pt)
+      grid(
+        columns: (1fr, 1fr),
+        align(left, text(size: 7pt)[#rodape-esq]),
+        align(right, text(size: 7pt)[#rodape-dir]),
+      )
+    },
+  ))
+}
+
 == `configurar-pagina` -- configurar a página
 
 A função `configurar-pagina` é usada como show-rule e aceita todos os parâmetros principais de `set page()` com nomes em português:
@@ -2741,6 +2787,611 @@ Conteúdo do documento...
 = Segunda seção
 
 Mais conteúdo...
+```
+
+Resultado visual (página 1):
+
+#align(center,
+  _pagina-mock(
+    [], [Meu Documento],
+    [1 Introdução], [Conteúdo do documento...],
+    [], [Página 1],
+    largura: 8cm,
+  )
+)
+
+== `numeracao-pagina` -- exibir número da página
+
+A função `numeracao-pagina()` exibe o número da página atual. É útil para compor cabeçalhos e rodapés:
+
+```typst
+// Número arábico (padrão)
+#numeracao-pagina()
+
+// Número romano minúsculo
+#numeracao-pagina(formato: "i")
+
+// Em negrito
+#numeracao-pagina(peso: "bold")
+```
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 6pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`formato`], [`"1"`], [Formato de numeração: `"1"` (arábico), `"i"` (romano min.), `"I"` (romano mai.), `"a"` (letra min.), etc.],
+    [`peso`], [`auto`], [Peso da fonte (ex: `"bold"`). `auto` = herda do contexto.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `numeracao-pagina()`],
+  kind: table,
+)
+
+== `marca-secao` -- marca corrente de seção
+
+A função `marca-secao()` retorna o título da seção mais recente no nível especificado. Equivale ao `\leftmark`/`\rightmark` do LaTeX (pacote `titleps`). Para uso dentro de cabeçalhos ou rodapés:
+
+```typst
+// Título da seção de nível 1 mais recente
+#marca-secao()
+
+// Com número da seção incluído
+#marca-secao(com-numero: true)
+
+// Em caixa alta e itálico
+#marca-secao(caixa: "alta", estilo: "italic")
+
+// Seção de nível 2
+#marca-secao(nivel: 2, peso: "bold")
+```
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 6pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`nivel`], [`1`], [Nível do heading a buscar.],
+    [`caixa`], [`none`], [`"alta"` (maiúsculas), `"baixa"` (minúsculas), `none` (original).],
+    [`peso`], [`auto`], [Peso da fonte (ex: `"bold"`). `auto` = herda do contexto.],
+    [`estilo`], [`auto`], [`"italic"` para itálico, `"normal"` para normal, `auto` = herda.],
+    [`com-numero`], [`false`], [Se `true`, inclui o número da seção antes do título.],
+    [`separador`], [`h(0.5em)`], [Espaço entre o número e o título (quando `com-numero: true`).],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `marca-secao()`],
+  kind: table,
+)
+
+== `cabecalho` -- cabeçalho de página
+
+A função `cabecalho()` gera conteúdo para o cabeçalho da página, equivalente ao `\fancyhead` do LaTeX (pacote `fancyhdr`). O conteúdo é organizado em três colunas (esquerda, centro, direita) com suporte opcional a alternância par/ímpar e linha separadora.
+
+=== Modo simples
+
+No modo simples, os mesmos conteúdos aparecem em todas as páginas:
+
+```typst
+// Número à direita
+#set page(
+  header: cabecalho(direita: numeracao-pagina()),
+)
+
+// Título à esquerda + número à direita + linha
+#set page(
+  header: cabecalho(
+    esquerda: [Meu Documento],
+    direita: numeracao-pagina(),
+    linha: 0.4pt,
+  ),
+)
+
+// Seção corrente + número + linha + fonte menor
+#set page(
+  header: cabecalho(
+    esquerda: marca-secao(),
+    direita: numeracao-pagina(),
+    linha: 0.4pt,
+    tamanho: 9pt,
+  ),
+)
+```
+
+=== Modo par/ímpar
+
+Para documentos com páginas alternadas (estilo livro), use os parâmetros `impar` e `par` com dicionários:
+
+```typst
+#set page(
+  header: cabecalho(
+    impar: (esquerda: none, centro: none, direita: marca-secao()),
+    par: (esquerda: [Meu Livro], centro: none, direita: none),
+    linha: 0.4pt,
+    tamanho: 9pt,
+  ),
+)
+```
+
+Cada dicionário aceita as chaves `esquerda`, `centro` e `direita`. Chaves omitidas são tratadas como `none`.
+
+*Nota:* ao usar o modo par/ímpar, forneça sempre ambos os dicionários (`impar` e `par`). Se apenas um for definido (por exemplo, só `impar`), as páginas sem configuração ficarão sem cabeçalho --- o fallback usa `esquerda`/`centro`/`direita`, que por padrão são `none`. O mesmo aplica-se a `rodape()`.
+
+=== Parâmetros
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 6pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`esquerda`], [`none`], [Conteúdo à esquerda (modo simples).],
+    [`centro`], [`none`], [Conteúdo centralizado (modo simples).],
+    [`direita`], [`none`], [Conteúdo à direita (modo simples).],
+    [`impar`], [`auto`], [Dict `(esquerda, centro, direita)` para páginas ímpares.],
+    [`par`], [`auto`], [Dict `(esquerda, centro, direita)` para páginas pares.],
+    [`linha`], [`0pt`], [Espessura da linha separadora abaixo do cabeçalho.],
+    [`cor-linha`], [`black`], [Cor da linha separadora.],
+    [`distancia-linha`], [`0.3em`], [Distância entre o conteúdo e a linha.],
+    [`tamanho`], [`10pt`], [Tamanho da fonte do cabeçalho.],
+    [`fonte`], [`auto`], [Família da fonte. `auto` = herda do documento.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `cabecalho()`],
+  kind: table,
+)
+
+== `rodape` -- rodapé de página
+
+A função `rodape()` gera conteúdo para o rodapé da página, equivalente ao `\fancyfoot` do LaTeX. Tem exatamente a mesma API que `cabecalho()`, mas a linha separadora aparece *acima* do conteúdo (no topo do rodapé):
+
+```typst
+// Nome da universidade centralizado
+#set page(
+  footer: rodape(centro: [Universidade Federal]),
+)
+
+// Número centralizado com linha acima
+#set page(
+  footer: rodape(
+    centro: numeracao-pagina(),
+    linha: 0.4pt,
+  ),
+)
+
+// Rodapé alternado par/ímpar
+#set page(
+  footer: rodape(
+    impar: (direita: numeracao-pagina()),
+    par: (esquerda: numeracao-pagina()),
+    linha: 0.4pt,
+  ),
+)
+```
+
+Os parâmetros são idênticos aos de `cabecalho()` (veja tabela acima).
+
+== `estilo-pagina` -- atalho combinado
+
+A função `estilo-pagina()` é uma show-rule que aplica cabeçalho, rodapé e numeração de uma vez, evitando múltiplos `set page(...)`:
+
+```typst
+#show: estilo-pagina.with(
+  cabecalho: cabecalho(
+    esquerda: marca-secao(caixa: "alta"),
+    direita: numeracao-pagina(),
+    linha: 0.4pt,
+  ),
+  rodape: rodape(centro: [Universidade Federal]),
+)
+```
+
+Parâmetros `auto` são omitidos e não sobrescrevem configurações existentes. Isso permite aplicar apenas o que se deseja:
+
+```typst
+// Só define o cabeçalho, sem alterar rodapé existente
+#show: estilo-pagina.with(
+  cabecalho: cabecalho(direita: numeracao-pagina()),
+)
+
+// Só define numeração
+#show: estilo-pagina.with(numeracao: "i")
+```
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 6pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`cabecalho`], [`auto`], [Conteúdo do cabeçalho (resultado de `cabecalho()` ou content direto).],
+    [`rodape`], [`auto`], [Conteúdo do rodapé (resultado de `rodape()` ou content direto).],
+    [`numeracao`], [`auto`], [Formato de numeração de página (`"1"`, `"i"`, `none`, etc.).],
+    [`posicao-numero`], [`auto`], [Alinhamento do número de página.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `estilo-pagina()`],
+  kind: table,
+)
+
+== Exemplo completo: cabeçalho e rodapé
+
+```typst
+#import "@preview/ferrmat:0.1.0": *
+
+#show: configurar-pagina.with(
+  papel: "a4",
+  margem: margem(superior: 3cm, inferior: 2cm, esquerda: 3cm, direita: 2cm),
+)
+
+// Estilo de livro: seção corrente no cabeçalho, número no rodapé
+#show: estilo-pagina.with(
+  cabecalho: cabecalho(
+    impar: (direita: marca-secao(caixa: "alta", peso: "bold")),
+    par: (esquerda: [Meu Livro]),
+    linha: 0.4pt,
+    tamanho: 9pt,
+  ),
+  rodape: rodape(
+    impar: (direita: numeracao-pagina()),
+    par: (esquerda: numeracao-pagina()),
+  ),
+)
+
+= Introdução
+
+Conteúdo do capítulo...
+
+= Revisão Bibliográfica
+
+Mais conteúdo...
+```
+
+Resultado visual (páginas 1 e 2, ímpar e par):
+
+#align(center, {
+  // Página 1 (ímpar): cabeçalho direita = seção, rodapé direita = número
+  _pagina-mock([], [*INTRODUÇÃO*], [1 Introdução], [Conteúdo do capítulo...], [], [1])
+  h(10pt)
+  // Página 2 (par): cabeçalho esquerda = "Meu Livro", rodapé esquerda = número
+  _pagina-mock([Meu Livro], [], [2 Revisão Bibliográfica], [Mais conteúdo...], [2], [])
+})
+
+#pagebreak()
+
+// ============================================================================
+// FORMATAÇÃO DE SEÇÕES
+// ============================================================================
+
+= Formatação de Seções em Português
+
+O FerrMat fornece wrappers para formatar os títulos de seção (headings) do Typst, equivalentes ao pacote `titlesec` do LaTeX. As funções `formatar-secao()` e `formatar-secoes()` permitem controlar peso, tamanho, caixa, forma de exibição e decorações dos headings.
+
+== `formatar-secao` -- formatar um nível
+
+A função `formatar-secao()` é usada dentro de show rules para formatar headings de um nível específico:
+
+```typst
+#show heading.where(level: 1): formatar-secao.with(
+  peso: "bold",
+  tamanho: 18pt,
+  caixa: "alta",
+)
+```
+
+Quando usada com `#show heading.where(level: N):`, a função recebe o heading element como primeiro argumento. Os demais parâmetros controlam a aparência.
+
+=== Parâmetros
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 6pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`peso`], [`auto`], [Peso da fonte: `"bold"`, `"regular"`, `"semibold"`, etc.],
+    [`estilo`], [`auto`], [`"italic"` para itálico, `"normal"`, `auto` = herda.],
+    [`tamanho`], [`12pt`], [Tamanho da fonte.],
+    [`fonte`], [`auto`], [Família da fonte.],
+    [`cor`], [`auto`], [Cor do texto.],
+    [`caixa`], [`none`], [`"alta"` (maiúsculas), `"baixa"` (minúsculas), `none` (original).],
+    [`alinhamento`], [`left`], [Alinhamento do título: `left`, `center`, `right`.],
+    [`recuo`], [`0pt`], [Recuo à esquerda do título.],
+    [`espacamento-antes`], [`1.5em`], [Espaço vertical antes do título.],
+    [`espacamento-depois`], [`1.5em`], [Espaço vertical depois do título. Na forma `"corrido"`, vira espaço horizontal entre o título e o texto seguinte.],
+    [`quebra-pagina`], [`false`], [Se `true`, insere quebra de página fraca antes.],
+    [`mostrar-numero`], [`auto`], [`auto` segue `it.numbering`, `true`/`false` para forçar.],
+    [`formato-numero`], [`auto`], [`auto` segue `it.numbering`. Formato alternativo: `"1."`, `"I."`, etc.],
+    [`separador-numero`], [`h(0.5em)`], [Espaço entre o número e o título.],
+    [`largura-numero`], [`2em`], [Largura reservada para o número na forma `"suspenso"`. Aumente para numeração profunda (ex: `3em` para `"1.1.1"`).],
+    [`forma`], [`"bloco"`], [Forma de exibição (veja abaixo).],
+    [`decoracao`], [`none`], [Content decorativo após o título (ex: `line()`).],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `formatar-secao()`],
+  kind: table,
+)
+
+=== Formas de exibição
+
+O parâmetro `forma` controla o layout do número e título, equivalente às formas do `titlesec`:
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 6pt,
+    table.hline(stroke: 1pt),
+    [*Forma*], [*titlesec*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`"bloco"`], [`block`], [Padrão. Número + título na mesma linha, em bloco separado.],
+    [`"corrido"`], [`runin`], [Título corre inline com o parágrafo seguinte.],
+    [`"suspenso"`], [`hang`], [Número pendurado à esquerda, texto indentado.],
+    [`"exibicao"`], [`display`], [Número em linha separada acima do título.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Formas de exibição de `formatar-secao()`],
+  kind: table,
+)
+
+=== Forma `"bloco"` (padrão)
+
+Número e título aparecem na mesma linha, em um bloco separado:
+
+```typst
+#show heading.where(level: 1): formatar-secao.with(
+  peso: "bold",
+  tamanho: 16pt,
+  caixa: "alta",
+  quebra-pagina: true,
+)
+
+= Introdução   // Resultado: INTRODUÇÃO
+```
+
+=== Forma `"corrido"`
+
+O título corre inline com o parágrafo seguinte, sem separação em bloco. Útil para subníveis de seção:
+
+```typst
+#show heading.where(level: 4): formatar-secao.with(
+  peso: "bold",
+  forma: "corrido",
+)
+
+==== Observação. O texto continua na mesma linha que o título.
+```
+
+=== Forma `"suspenso"`
+
+O número fica pendurado à esquerda, com o texto indentado:
+
+```typst
+#show heading.where(level: 2): formatar-secao.with(
+  peso: "bold",
+  tamanho: 14pt,
+  forma: "suspenso",
+)
+
+== Título com número suspenso
+```
+
+=== Forma `"exibicao"`
+
+O número aparece em uma linha separada acima do título. Comum para capítulos de livro:
+
+```typst
+#show heading.where(level: 1): formatar-secao.with(
+  peso: "bold",
+  tamanho: 24pt,
+  alinhamento: center,
+  forma: "exibicao",
+  quebra-pagina: true,
+)
+
+= Meu Capítulo   // Resultado: "1" acima de "Meu Capítulo", centralizado
+```
+
+=== Com decoração
+
+O parâmetro `decoracao` adiciona conteúdo após o título. Útil para linhas decorativas:
+
+```typst
+#show heading.where(level: 1): formatar-secao.with(
+  peso: "bold",
+  tamanho: 18pt,
+  caixa: "alta",
+  decoracao: line(length: 100%, stroke: 0.5pt),
+)
+
+= Introdução   // Resultado: INTRODUÇÃO com uma linha abaixo
+```
+
+=== Com cor e fonte personalizada
+
+```typst
+#show heading.where(level: 1): formatar-secao.with(
+  peso: "bold",
+  tamanho: 20pt,
+  cor: eastern,
+  fonte: "Libertinus Sans",
+  alinhamento: center,
+)
+```
+
+== `formatar-secoes` -- configurar todos os níveis
+
+A função `formatar-secoes()` é uma show-rule que configura os 5 primeiros níveis de heading de uma vez, evitando 5 show rules separadas. Cada nível é controlado por um dicionário com as mesmas chaves de `formatar-secao()`:
+
+```typst
+#show: formatar-secoes.with(
+  secao-1: (peso: "bold", tamanho: 18pt, caixa: "alta", quebra-pagina: true),
+  secao-2: (peso: "bold", tamanho: 14pt),
+  secao-3: (peso: "bold", tamanho: 12pt, estilo: "italic"),
+  secao-4: (tamanho: 12pt),
+  secao-5: (estilo: "italic", tamanho: 12pt),
+  numeracao: "1.1",
+)
+```
+
+=== Parâmetros
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 6pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`secao-1`], [`auto`], [Dict de config para nível 1. `auto` = bold 16pt, quebra de página.],
+    [`secao-2`], [`auto`], [Dict de config para nível 2. `auto` = bold 14pt.],
+    [`secao-3`], [`auto`], [Dict de config para nível 3. `auto` = bold 12pt.],
+    [`secao-4`], [`auto`], [Dict de config para nível 4. `auto` = 12pt.],
+    [`secao-5`], [`auto`], [Dict de config para nível 5. `auto` = italic 12pt.],
+    [`numeracao`], [`"1.1"`], [Formato de numeração dos headings. `none` para remover, `auto` para não alterar.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `formatar-secoes()`],
+  kind: table,
+)
+
+=== Defaults quando `auto`
+
+Quando um `secao-N` é `auto`, os seguintes defaults são aplicados:
+
+#figure(
+  table(
+    columns: (auto, auto, auto, auto, auto, auto),
+    stroke: none,
+    inset: 6pt,
+    table.hline(stroke: 1pt),
+    [*Nível*], [*peso*], [*tamanho*], [*estilo*], [*quebra-pagina*], [*Outros*],
+    table.hline(stroke: 0.5pt),
+    [1], [`"bold"`], [`16pt`], [---], [`true`], [---],
+    [2], [`"bold"`], [`14pt`], [---], [---], [---],
+    [3], [`"bold"`], [`12pt`], [---], [---], [---],
+    [4], [---], [`12pt`], [---], [---], [---],
+    [5], [---], [`12pt`], [`"italic"`], [---], [---],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Defaults de `formatar-secoes()` para cada nível],
+  kind: table,
+)
+
+=== Sobrescrevendo parcialmente
+
+O dict do usuário faz merge com os defaults. Chaves omitidas mantêm o default:
+
+```typst
+// Só muda a cor do nível 1 — peso, tamanho e quebra-pagina mantêm os defaults
+#show: formatar-secoes.with(
+  secao-1: (cor: eastern),
+)
+```
+
+=== Sem numeração
+
+Para títulos sem numeração, passe `numeracao: none`:
+
+```typst
+#show: formatar-secoes.with(
+  secao-1: (peso: "bold", tamanho: 18pt, caixa: "alta"),
+  numeracao: none,
+)
+```
+
+=== Estilo de artigo acadêmico
+
+```typst
+#show: formatar-secoes.with(
+  secao-1: (peso: "bold", tamanho: 14pt, caixa: "alta", quebra-pagina: false),
+  secao-2: (peso: "regular", tamanho: 12pt, caixa: "alta"),
+  secao-3: (peso: "bold", tamanho: 12pt),
+  secao-4: (peso: "bold", tamanho: 12pt, estilo: "italic"),
+  numeracao: "1.1",
+)
+```
+
+=== Estilo de livro
+
+```typst
+#show: formatar-secoes.with(
+  secao-1: (
+    peso: "bold", tamanho: 24pt,
+    alinhamento: center,
+    forma: "exibicao",
+    quebra-pagina: true,
+  ),
+  secao-2: (peso: "bold", tamanho: 14pt, forma: "suspenso"),
+  secao-3: (peso: "bold", tamanho: 12pt, estilo: "italic"),
+  numeracao: "1.1",
+)
+```
+
+== Exemplo completo: página + seções combinados
+
+O exemplo a seguir mostra o uso combinado de cabeçalhos, rodapés e formatação de seções:
+
+```typst
+#import "@preview/ferrmat:0.1.0": *
+
+// Configuração de página
+#show: configurar-pagina.with(
+  papel: "a4",
+  margem: margem(superior: 3cm, inferior: 2cm, esquerda: 3cm, direita: 2cm),
+)
+
+// Cabeçalho com seção corrente + linha separadora
+#show: estilo-pagina.with(
+  cabecalho: cabecalho(
+    esquerda: marca-secao(caixa: "alta", peso: "bold"),
+    direita: numeracao-pagina(),
+    linha: 0.4pt,
+    tamanho: 9pt,
+  ),
+  rodape: rodape(
+    centro: [Universidade Federal -- 2026],
+    linha: 0.4pt,
+  ),
+)
+
+// Formatação dos headings
+#show: formatar-secoes.with(
+  secao-1: (peso: "bold", tamanho: 18pt, caixa: "alta",
+            quebra-pagina: true,
+            decoracao: line(length: 100%, stroke: 0.5pt)),
+  secao-2: (peso: "bold", tamanho: 14pt),
+  secao-3: (peso: "bold", tamanho: 12pt, estilo: "italic"),
+  numeracao: "1.1",
+)
+
+= Introdução
+
+Conteúdo do capítulo...
+
+== Motivação
+
+Texto da seção...
+
+=== Detalhes
+
+Subseção em itálico...
+
+= Revisão Bibliográfica
+
+Outro capítulo...
 ```
 
 #pagebreak()

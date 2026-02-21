@@ -20,7 +20,7 @@ O FerrMat é o pacote companheiro do **[ABNTyp](https://github.com/3sdras/abntyp
 
 ### Claude Code
 
-O **[Claude Code](https://claude.ai/claude-code)** é uma ferramenta de programação assistida por IA da Anthropic. O código do FerrMat, incluindo as funções, documentação e o documento `introducao-matypst.typ`, foi desenvolvido via Claude Code (modelo Claude Opus 4.5/4.6).
+O **[Claude Code](https://claude.ai/claude-code)** é uma ferramenta de programação assistida por IA da Anthropic. O código do FerrMat, incluindo as funções, documentação e o documento `introducao-ferrmat.typ`, foi desenvolvido via Claude Code (modelo Claude Opus 4.5/4.6).
 
 ### Typst
 
