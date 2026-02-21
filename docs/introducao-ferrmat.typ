@@ -3394,6 +3394,358 @@ Subseção em itálico...
 Outro capítulo...
 ```
 
+// ============================================================================
+// PROVAS E TESTES
+// ============================================================================
+
+#pagebreak()
+
+= Provas e Testes
+
+O FerrMat inclui um módulo completo para criação de provas e exames acadêmicos, inspirado no `exam.cls` do LaTeX. Todas as funções usam nomes em português e se integram com o sistema de caixas do FerrMat.
+
+As funções principais são:
+
+/ `cabecalho-prova()`: cabeçalho com dados da instituição, campos de preenchimento e caixa de nota.
+/ `questao()`: questão auto-numerada com pontos opcionais e separador.
+/ `subquestao()`: sub-item letrado (a, b, c...).
+/ `alternativas()`: múltipla escolha com letras ou checkboxes.
+/ `verdadeiro-falso()`: afirmações V ou F.
+/ `preencher-linhas()`: linhas horizontais para resposta.
+/ `preencher-pontilhado()`: linhas pontilhadas para resposta.
+/ `preencher-grade()`: grade quadriculada.
+/ `espaco-resposta()`: espaço em branco (com borda opcional).
+/ `total-pontos()`: exibe a soma dos pontos acumulados.
+/ `tabela-pontos()`: tabela de pontuação por questão.
+
+== Cabeçalho de prova
+
+A função `cabecalho-prova()` gera o bloco de identificação no topo da prova. Aceita dados da instituição, campos de preenchimento pelo aluno e uma caixa de nota.
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#cabecalho-prova(
+  instituicao: \"Universidade Federal de Jataí\",
+  disciplina: \"Cálculo I\",
+  professor: \"Prof. Dr. Esdras Costa\",
+  data: \"21/02/2026\",
+  titulo: \"1ª Prova\",
+  campos: (\"Nome\", \"Matrícula\", \"Turma\"),
+  instrucoes: [
+    - Prova individual, sem consulta.
+    - Duração: 2 horas.
+  ],
+)")
+]
+
+#cabecalho-prova(
+  instituicao: "Universidade Federal de Jataí",
+  disciplina: "Cálculo I",
+  professor: "Prof. Dr. Esdras Costa",
+  data: "21/02/2026",
+  titulo: "1ª Prova",
+  campos: ("Nome", "Matrícula", "Turma"),
+  instrucoes: [
+    - Prova individual, sem consulta.
+    - Duração: 2 horas.
+  ],
+)
+
+=== Parâmetros do cabeçalho
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 5pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`instituicao`], [`none`], [Nome da escola ou universidade.],
+    [`departamento`], [`none`], [Faculdade ou departamento.],
+    [`disciplina`], [`none`], [Nome da disciplina.],
+    [`professor`], [`none`], [Nome do professor.],
+    [`data`], [`none`], [Data da prova.],
+    [`titulo`], [`"Prova"`], [Título exibido no topo (ex: "Exame Final").],
+    [`instrucoes`], [`none`], [Bloco de instruções (exibido em caixa separada abaixo).],
+    [`logo`], [`none`], [Imagem do logo (content).],
+    [`logo-largura`], [`2cm`], [Largura do logo.],
+    [`campos`], [`("Nome", "Turma")`], [Array de campos de preenchimento pelo aluno.],
+    [`campo-nota`], [`true`], [Exibe caixa de nota à direita.],
+    [`nota-largura`], [`2.5cm`], [Tamanho da caixa de nota.],
+    [`cor`], [`black`], [Cor da borda.],
+    [`espessura`], [`1pt`], [Espessura da borda.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `cabecalho-prova()`],
+  kind: table,
+)
+
+== Questões e sub-questões
+
+A função `questao()` numera automaticamente as questões (1, 2, 3...) e exibe a pontuação entre parênteses. Um separador é desenhado entre questões (exceto antes da primeira). A função `subquestao()` cria sub-itens letrados (a, b, c...) com reset automático por questão.
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#questao(pontos: 2.5)[
+  Calcule o limite:
+  $ lim_(x -> 0) (sin x) / x $
+]
+
+#questao[
+  Derive as seguintes funções:
+  #subquestao(pontos: 1.5)[$f(x) = x^3 + 2x$]
+  #subquestao(pontos: 1.5)[$g(x) = ln(x^2 + 1)$]
+]")
+]
+
+#questao(pontos: 2.5)[
+  Calcule o limite:
+  $ lim_(x -> 0) (sin x) / x $
+]
+
+#questao[
+  Derive as seguintes funções:
+  #subquestao(pontos: 1.5)[$f(x) = x^3 + 2x$]
+  #subquestao(pontos: 1.5)[$g(x) = ln(x^2 + 1)$]
+]
+
+=== Parâmetros de `questao()`
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 5pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`pontos`], [`none`], [Pontos da questão (float ou int). Exibidos entre parênteses.],
+    [`separador`], [`true`], [Linha divisória antes da questão (exceto questão 1).],
+    [`espaco`], [`none`], [Se fornecido, insere `espaco-resposta()` após o body.],
+    [`formato-pontos`], [`auto`], [Função `(pts) => content` para personalizar exibição dos pontos.],
+    [`recuo`], [`0pt`], [Recuo à esquerda.],
+    [`negrito`], [`true`], [Se o rótulo "Questão N" aparece em negrito.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `questao()`],
+  kind: table,
+)
+
+=== Parâmetros de `subquestao()`
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 5pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`pontos`], [`none`], [Pontos da sub-questão.],
+    [`recuo`], [`1.5em`], [Recuo à esquerda.],
+    [`negrito`], [`false`], [Se a letra aparece em negrito.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `subquestao()`],
+  kind: table,
+)
+
+== Alternativas (múltipla escolha)
+
+A função `alternativas()` aceita opções posicionais e as formata com letras `(A)`, `(B)`, ... ou checkboxes. Suporta layout vertical (padrão) e horizontal com número de colunas configurável.
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#alternativas(
+  [$f'(x) = e^(2x)$],
+  [$f'(x) = 2e^(2x)$],
+  [$f'(x) = 2x e^(2x)$],
+  [$f'(x) = e^(2)$],
+)")
+]
+
+#alternativas(
+  [$f'(x) = e^(2x)$],
+  [$f'(x) = 2e^(2x)$],
+  [$f'(x) = 2x e^(2x)$],
+  [$f'(x) = e^(2)$],
+)
+
+=== Alternativas horizontais
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#alternativas(
+  [$2$], [$4$], [$6$], [$8$],
+  horizontal: true,
+  colunas: 4,
+)")
+]
+
+#alternativas(
+  [$2$], [$4$], [$6$], [$8$],
+  horizontal: true,
+  colunas: 4,
+)
+
+=== Alternativas com checkbox
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#alternativas(
+  marcador: \"caixa\",
+  [Sim], [Não], [Talvez],
+)")
+]
+
+#alternativas(
+  marcador: "caixa",
+  [Sim], [Não], [Talvez],
+)
+
+=== Parâmetros de `alternativas()`
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 5pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`marcador`], [`"letra"`], [`"letra"` = (A), (B)... ou `"caixa"` = checkbox vazio.],
+    [`horizontal`], [`false`], [Se `true`, distribui opções em grade horizontal.],
+    [`colunas`], [`auto`], [Número de colunas. `auto` = todas em uma linha se horizontal.],
+    [`recuo`], [`1.5em`], [Recuo à esquerda.],
+    [`espacamento`], [`0.6em`], [Espaço entre opções.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `alternativas()`],
+  kind: table,
+)
+
+== Verdadeiro ou Falso
+
+A função `verdadeiro-falso()` aceita afirmações posicionais e as formata com parênteses `(   )` (padrão) ou checkboxes `☐V ☐F`.
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#verdadeiro-falso(
+  [Toda função contínua é derivável.],
+  [Toda função derivável é contínua.],
+)")
+]
+
+#verdadeiro-falso(
+  [Toda função contínua é derivável.],
+  [Toda função derivável é contínua.],
+)
+
+=== Com checkbox
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#verdadeiro-falso(
+  marcador: \"caixa\",
+  [A Terra é plana.],
+  [O sol é uma estrela.],
+)")
+]
+
+#verdadeiro-falso(
+  marcador: "caixa",
+  [A Terra é plana.],
+  [O sol é uma estrela.],
+)
+
+== Espaços de resposta
+
+O módulo oferece quatro formas de criar espaços para o aluno escrever a resposta.
+
+=== Linhas
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#preencher-linhas(altura: 3cm, espacamento: 0.7cm)")
+]
+
+#preencher-linhas(altura: 3cm, espacamento: 0.7cm)
+
+=== Pontilhado
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#preencher-pontilhado(altura: 3cm, espacamento: 0.7cm)")
+]
+
+#preencher-pontilhado(altura: 3cm, espacamento: 0.7cm)
+
+=== Grade quadriculada
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#preencher-grade(altura: 2.5cm, celula: 0.5cm)")
+]
+
+#preencher-grade(altura: 2.5cm, celula: 0.5cm)
+
+=== Espaço em branco
+
+`espaco-resposta()` cria um bloco vazio com borda opcional.
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#espaco-resposta(altura: 2cm, borda: \"completa\")
+#espaco-resposta(altura: 2cm, borda: \"pontilhada\")")
+]
+
+#espaco-resposta(altura: 2cm, borda: "completa")
+#espaco-resposta(altura: 2cm, borda: "pontilhada")
+
+=== Referência de parâmetros
+
+#figure(
+  table(
+    columns: (auto, 1fr),
+    stroke: none,
+    inset: 5pt,
+    table.hline(stroke: 1pt),
+    [*Função*], [*Parâmetros*],
+    table.hline(stroke: 0.5pt),
+    [`preencher-linhas()`], [`altura: 3cm`, `espacamento: 0.8cm`, `cor: luma(180)`, `espessura: 0.5pt`],
+    [`preencher-pontilhado()`], [Mesmos que `preencher-linhas()` + `traco: 1pt`, `intervalo: 2pt`],
+    [`preencher-grade()`], [`altura: 3cm`, `celula: 0.5cm`, `cor: luma(200)`, `espessura: 0.3pt`],
+    [`espaco-resposta()`], [`altura: 3cm`, `borda: none` (`"completa"` ou `"pontilhada"`), `cor-borda: luma(200)`],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Referência dos espaços de resposta],
+  kind: table,
+)
+
+== Total e tabela de pontos
+
+A função `total-pontos()` exibe a soma de todos os pontos acumulados (questões e sub-questões). A função `tabela-pontos()` gera uma tabela com uma coluna por questão (somente pontos de `questao()`, sem contar sub-questões separadamente).
+
+*Importante:* se uma questão tem sub-questões com pontos próprios, atribua `pontos` apenas às sub-questões _ou_ à questão principal, não a ambos, para evitar contagem duplicada no total.
+
+#exemplo-doc[
+  #raw(block: true, lang: "typst", "#total-pontos()
+#tabela-pontos()")
+]
+
+#total-pontos()
+#v(0.3em)
+#tabela-pontos()
+
+=== Parâmetros de `tabela-pontos()`
+
+#figure(
+  table(
+    columns: (auto, auto, 1fr),
+    stroke: none,
+    inset: 5pt,
+    table.hline(stroke: 1pt),
+    [*Parâmetro*], [*Padrão*], [*Descrição*],
+    table.hline(stroke: 0.5pt),
+    [`titulo-questao`], [`"Questão"`], [Rótulo de cada coluna (abreviado para "Q" se > 6 questões).],
+    [`titulo-total`], [`"Total"`], [Rótulo da coluna de soma.],
+    [`cor-cabecalho`], [`luma(230)`], [Cor de fundo do cabeçalho.],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Parâmetros de `tabela-pontos()`],
+  kind: table,
+)
+
 #pagebreak()
 
 // ============================================================================

@@ -5,3 +5,4 @@
 #import "src/cronograma.typ": *
 #import "src/pagina.typ": *
 #import "src/secoes.typ": *
+#import "src/prova.typ": *
