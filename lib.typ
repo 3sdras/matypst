@@ -6,3 +6,4 @@
 #import "src/pagina.typ": *
 #import "src/secoes.typ": *
 #import "src/prova.typ": *
+#import "src/colunas.typ": *

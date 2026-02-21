@@ -3746,6 +3746,250 @@ A função `total-pontos()` exibe a soma de todos os pontos acumulados (questõe
   kind: table,
 )
 
+// ============================================================================
+// CAPÍTULO 11: COLUNAS E GRADES
+// ============================================================================
+
+#pagebreak()
+
+= Colunas e Grades
+
+O FerrMat fornece wrappers em português para as funções de layout em colunas e grade do Typst: `columns()`, `colbreak()`, `grid()` e seus sub-elementos.
+
+*Importante: `grade()` vs. `table()`* --- No Typst, `grid()` e `table()` são funções diferentes. A `grid()` (encapsulada por `grade()`) é um mecanismo de _layout_: posiciona elementos em linhas e colunas, sem bordas por padrão, sem título nem numeração. Já a `table()` é semântica: representa uma tabela de dados, com bordas por padrão, e pode receber legenda via `figure()`. Use `grade()` para diagramar conteúdo (como alinhar dois blocos lado a lado) e `table()` para apresentar dados tabulares.
+
+=== A unidade `fr` (fração)
+
+Ao definir colunas ou linhas de uma grade, é comum usar a unidade `fr` (_fraction_). Ela distribui o espaço disponível proporcionalmente entre as colunas. Por exemplo:
+
+- `(1fr, 1fr, 1fr)` --- três colunas de largura igual (cada uma ocupa 1/3)
+- `(1fr, 2fr)` --- duas colunas; a segunda tem o dobro da largura da primeira
+- `(auto, 1fr)` --- a primeira coluna ocupa só o necessário; a segunda preenche o restante
+- `(100pt, 1fr)` --- a primeira tem tamanho fixo; a segunda preenche o que sobrar
+
+#caixa(titulo: "Exemplo: distribuição com fr")[
+  ```typst
+  #grade(
+    colunas: (1fr, 2fr, 1fr),
+    borda: 0.5pt, recuo: 5pt,
+    [25%], [50%], [25%],
+  )
+  ```
+]
+
+#caixa(titulo: "Resultado")[
+  #grade(
+    colunas: (1fr, 2fr, 1fr),
+    borda: 0.5pt, recuo: 5pt,
+    [25%], [50%], [25%],
+  )
+]
+
+== `colunas` -- layout de colunas de texto
+
+A função `colunas()` distribui conteúdo em múltiplas colunas, equivalente a `columns()` do Typst.
+
+/ `corpo`: conteúdo a ser distribuído nas colunas (posicional)
+/ `quantidade`: número de colunas (padrão: `2`)
+/ `espacamento`: espaçamento entre colunas (`gutter`)
+
+#caixa(titulo: "Exemplo: duas colunas")[
+  ```typst
+  #colunas(quantidade: 2, espacamento: 1cm)[
+    Texto distribuído na primeira coluna. Quando o espaço
+    acabar, o Typst passa automaticamente para a segunda coluna.
+
+    #quebra-coluna()
+
+    Agora estamos na segunda coluna.
+  ]
+  ```
+]
+
+#caixa(titulo: "Resultado")[
+  #colunas(quantidade: 2, espacamento: 1cm)[
+    Texto distribuído na primeira coluna. Quando o espaço
+    acabar, o Typst passa automaticamente para a segunda coluna.
+
+    #quebra-coluna()
+
+    Agora estamos na segunda coluna.
+  ]
+]
+
+== `quebra-coluna` -- quebra de coluna
+
+Insere uma quebra de coluna manual, equivalente a `colbreak()`.
+
+/ `fraco`: se `true`, só quebra se não estiver já no topo da coluna (padrão: `false`)
+
+#caixa(titulo: "Exemplo: sem quebra (fluxo natural)")[
+  ```typst
+  #colunas(quantidade: 2, espacamento: 1cm)[
+    Aqui o texto flui livremente entre as colunas.
+    O Typst decide onde cortar quando o espaço
+    da primeira coluna acaba. O resultado pode
+    ficar desbalanceado dependendo do conteúdo.
+  ]
+  ```
+]
+
+#caixa(titulo: "Resultado")[
+  #colunas(quantidade: 2, espacamento: 1cm)[
+    Aqui o texto flui livremente entre as colunas.
+    O Typst decide onde cortar quando o espaço
+    da primeira coluna acaba. O resultado pode
+    ficar desbalanceado dependendo do conteúdo.
+  ]
+]
+
+#caixa(titulo: "Exemplo: com quebra manual")[
+  ```typst
+  #colunas(quantidade: 2, espacamento: 1cm)[
+    Primeira coluna: conteúdo controlado.
+
+    #quebra-coluna()
+
+    Segunda coluna: começa exatamente aqui,
+    independente do espaço restante na primeira.
+  ]
+  ```
+]
+
+#caixa(titulo: "Resultado")[
+  #colunas(quantidade: 2, espacamento: 1cm)[
+    Primeira coluna: conteúdo controlado.
+
+    #quebra-coluna()
+
+    Segunda coluna: começa exatamente aqui,
+    independente do espaço restante na primeira.
+  ]
+]
+
+== `grade` -- layout de grade
+
+A função `grade()` cria um layout de grade, equivalente a `grid()` do Typst. Todos os parâmetros são traduzidos:
+
+/ `colunas`: definição das colunas (`columns`)
+/ `linhas`: definição das linhas (`rows`)
+/ `espacamento`: espaçamento geral (`gutter`)
+/ `espacamento-coluna`: espaçamento entre colunas (`column-gutter`)
+/ `espacamento-linha`: espaçamento entre linhas (`row-gutter`)
+/ `alinhamento`: alinhamento do conteúdo (`align`)
+/ `preenchimento`: cor de fundo (`fill`)
+/ `borda`: bordas (`stroke`)
+/ `recuo`: espaçamento interno (`inset`)
+
+#caixa(titulo: "Exemplo: grade simples")[
+  ```typst
+  #grade(
+    colunas: (1fr, 1fr, 1fr),
+    borda: 1pt,
+    recuo: 8pt,
+    alinhamento: center,
+    [*A*], [*B*], [*C*],
+    [1],   [2],   [3],
+    [4],   [5],   [6],
+  )
+  ```
+]
+
+#caixa(titulo: "Resultado")[
+  #grade(
+    colunas: (1fr, 1fr, 1fr),
+    borda: 1pt,
+    recuo: 8pt,
+    alinhamento: center,
+    [*A*], [*B*], [*C*],
+    [1],   [2],   [3],
+    [4],   [5],   [6],
+  )
+]
+
+== Sub-elementos da grade
+
+O módulo também fornece wrappers para os sub-elementos de `grid`:
+
+/ `celula()`: célula individual (`grid.cell`) -- com `extensao-coluna`, `extensao-linha`, `alinhamento`, `preenchimento`, `borda`, `recuo`, `quebravel`, `x`, `y`
+/ `linha-horizontal()`: linha horizontal (`grid.hline`) -- com `y`, `inicio`, `fim`, `borda`, `posicao`
+/ `linha-vertical()`: linha vertical (`grid.vline`) -- com `x`, `inicio`, `fim`, `borda`, `posicao`
+/ `cabecalho-grade()`: cabeçalho repetido (`grid.header`) -- com `repetir`, `nivel`
+/ `rodape-grade()`: rodapé repetido (`grid.footer`) -- com `repetir`
+
+#caixa(titulo: "Exemplo: grade com sub-elementos")[
+  ```typst
+  #grade(
+    colunas: (1fr, 1fr, 1fr),
+    borda: 0.5pt,
+    recuo: 8pt,
+    cabecalho-grade(
+      celula(alinhamento: center, preenchimento: luma(230))[*Nome*],
+      celula(alinhamento: center, preenchimento: luma(230))[*Idade*],
+      celula(alinhamento: center, preenchimento: luma(230))[*Cidade*],
+    ),
+    [Ana],  [25], [São Paulo],
+    [João], [30], [Curitiba],
+    linha-horizontal(borda: 2pt),
+    celula(extensao-coluna: 2, alinhamento: right)[*Total:*],
+    [2 pessoas],
+  )
+  ```
+]
+
+#caixa(titulo: "Resultado")[
+  #grade(
+    colunas: (1fr, 1fr, 1fr),
+    borda: 0.5pt,
+    recuo: 8pt,
+    cabecalho-grade(
+      celula(alinhamento: center, preenchimento: luma(230))[*Nome*],
+      celula(alinhamento: center, preenchimento: luma(230))[*Idade*],
+      celula(alinhamento: center, preenchimento: luma(230))[*Cidade*],
+    ),
+    [Ana],  [25], [São Paulo],
+    [João], [30], [Curitiba],
+    linha-horizontal(borda: 2pt),
+    celula(extensao-coluna: 2, alinhamento: right)[*Total:*],
+    [2 pessoas],
+  )
+]
+
+== Mapeamento de parâmetros
+
+#figure(
+  table(
+    columns: (1fr, 1fr, 1fr),
+    stroke: none,
+    inset: 5pt,
+    table.hline(stroke: 1pt),
+    [*Português*], [*Typst (English)*], [*Função*],
+    table.hline(stroke: 0.5pt),
+    [`quantidade`], [`count`], [`colunas()`],
+    [`espacamento`], [`gutter`], [`colunas()`, `grade()`],
+    [`fraco`], [`weak`], [`quebra-coluna()`],
+    [`colunas`], [`columns`], [`grade()`],
+    [`linhas`], [`rows`], [`grade()`],
+    [`espacamento-coluna`], [`column-gutter`], [`grade()`],
+    [`espacamento-linha`], [`row-gutter`], [`grade()`],
+    [`alinhamento`], [`align`], [`grade()`, `celula()`],
+    [`preenchimento`], [`fill`], [`grade()`, `celula()`],
+    [`borda`], [`stroke`], [`grade()`, `celula()`, `linha-*()`],
+    [`recuo`], [`inset`], [`grade()`, `celula()`],
+    [`extensao-coluna`], [`colspan`], [`celula()`],
+    [`extensao-linha`], [`rowspan`], [`celula()`],
+    [`quebravel`], [`breakable`], [`celula()`],
+    [`inicio`], [`start`], [`linha-horizontal()`, `linha-vertical()`],
+    [`fim`], [`end`], [`linha-horizontal()`, `linha-vertical()`],
+    [`posicao`], [`position`], [`linha-horizontal()`, `linha-vertical()`],
+    [`repetir`], [`repeat`], [`cabecalho-grade()`, `rodape-grade()`],
+    [`nivel`], [`level`], [`cabecalho-grade()`],
+    table.hline(stroke: 1pt),
+  ),
+  caption: [Mapeamento de parâmetros PT → EN],
+  kind: table,
+)
+
 #pagebreak()
 
 // ============================================================================
