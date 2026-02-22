@@ -9,7 +9,7 @@ repository = "https://github.com/3sdras/ferrmat"
 keywords = ["tcolorbox", "theorem", "teorema", "box", "caixa", "math", "matemática", "code", "gantt"]
 categories = ["components", "visualization"]
 compiler = "0.14.0"
-exclude = ["docs/*", "test*.typ", "test*.pdf", "CREDITS.md", ".DS_Store", ".gitignore"]
+exclude = ["docs/*", "tests/*", "test*.typ", "test*.pdf", "CREDITS.md", ".DS_Store", ".gitignore", ".claude/*"]
 
 [dependencies]
 cetz = "0.4.0"

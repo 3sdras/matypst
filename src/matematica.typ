@@ -45,14 +45,14 @@
 // ============================================================================
 
 // Estado global de estilo visual: "colorido" (padrão), "cinza", "sem-caixa"
-#let ambiente-estilo = state("ambiente-estilo", "colorido")
+#let ambiente-estilo = state("ferrmat-ambiente-estilo", "colorido")
 #let configurar-ambientes(estilo) = ambiente-estilo.update(estilo)
 
 // Estado global de numeração
-#let numeracao-ambientes = state("numeracao-ambientes", (modo: "por-tipo", por-secao: false))
+#let numeracao-ambientes = state("ferrmat-numeracao-ambientes", (modo: "por-tipo", por-secao: false))
 
 // Contadores dos ambientes pré-configurados
-#let _contadores-ambientes = ("teorema", "lema", "corolario", "proposicao", "axioma", "conjectura", "afirmacao", "definicao", "notacao", "propriedade", "exemplo", "problema", "resultado")
+#let _contadores-ambientes = ("ferrmat-teorema", "ferrmat-lema", "ferrmat-corolario", "ferrmat-proposicao", "ferrmat-axioma", "ferrmat-conjectura", "ferrmat-afirmacao", "ferrmat-definicao", "ferrmat-notacao", "ferrmat-propriedade", "ferrmat-exemplo", "ferrmat-problema", "ferrmat-resultado")
 
 /// Configura o modo de numeração dos ambientes matemáticos.
 ///
@@ -76,7 +76,7 @@
     if por-secao {
       show heading.where(level: nivel): it => {
         if modo == "unificado" {
-          counter("resultado").update(0)
+          counter("ferrmat-resultado").update(0)
         } else {
           for key in _contadores-ambientes {
             counter(key).update(0)
@@ -106,7 +106,7 @@
     // funcione retroativamente. Trocar de modo no meio do documento NÃO é recomendado.
     if contador != none {
       counter(contador).step()
-      counter("resultado").step()
+      counter("ferrmat-resultado").step()
     }
 
     context {
@@ -116,7 +116,7 @@
       let secao-global = config.at("por-secao", default: false)
 
       let contador-efetivo = if modo-num == "unificado" and contador != none {
-        "resultado"
+        "ferrmat-resultado"
       } else {
         contador
       }
@@ -173,22 +173,22 @@
 }
 
 // --- Enunciados (azul — corpo em itálico) ---
-#let teorema = ambiente-matematico(cor: blue, espessura: 3pt, prefixo: "Teorema", contador: "teorema", italico: true)
-#let lema = ambiente-matematico(cor: blue.darken(10%), espessura: 2pt, prefixo: "Lema", contador: "lema", italico: true)
-#let corolario = ambiente-matematico(cor: blue.lighten(10%), espessura: 2pt, prefixo: "Corolário", contador: "corolario", italico: true)
-#let proposicao = ambiente-matematico(cor: eastern, espessura: 2pt, prefixo: "Proposição", contador: "proposicao", italico: true)
-#let axioma = ambiente-matematico(cor: navy, espessura: 3pt, prefixo: "Axioma", contador: "axioma", italico: true)
-#let conjectura = ambiente-matematico(cor: purple, espessura: 2pt, prefixo: "Conjectura", contador: "conjectura", italico: true)
-#let afirmacao = ambiente-matematico(cor: teal, espessura: 2pt, prefixo: "Afirmação", contador: "afirmacao", italico: true)
+#let teorema = ambiente-matematico(cor: blue, espessura: 3pt, prefixo: "Teorema", contador: "ferrmat-teorema", italico: true)
+#let lema = ambiente-matematico(cor: blue.darken(10%), espessura: 2pt, prefixo: "Lema", contador: "ferrmat-lema", italico: true)
+#let corolario = ambiente-matematico(cor: blue.lighten(10%), espessura: 2pt, prefixo: "Corolário", contador: "ferrmat-corolario", italico: true)
+#let proposicao = ambiente-matematico(cor: eastern, espessura: 2pt, prefixo: "Proposição", contador: "ferrmat-proposicao", italico: true)
+#let axioma = ambiente-matematico(cor: navy, espessura: 3pt, prefixo: "Axioma", contador: "ferrmat-axioma", italico: true)
+#let conjectura = ambiente-matematico(cor: purple, espessura: 2pt, prefixo: "Conjectura", contador: "ferrmat-conjectura", italico: true)
+#let afirmacao = ambiente-matematico(cor: teal, espessura: 2pt, prefixo: "Afirmação", contador: "ferrmat-afirmacao", italico: true)
 
 // --- Definições (verde — corpo normal) ---
-#let definicao = ambiente-matematico(cor: green, espessura: 3pt, prefixo: "Definição", contador: "definicao")
-#let notacao = ambiente-matematico(cor: olive, espessura: 2pt, prefixo: "Notação", contador: "notacao")
-#let propriedade = ambiente-matematico(cor: green.darken(10%), espessura: 2pt, prefixo: "Propriedade", contador: "propriedade")
+#let definicao = ambiente-matematico(cor: green, espessura: 3pt, prefixo: "Definição", contador: "ferrmat-definicao")
+#let notacao = ambiente-matematico(cor: olive, espessura: 2pt, prefixo: "Notação", contador: "ferrmat-notacao")
+#let propriedade = ambiente-matematico(cor: green.darken(10%), espessura: 2pt, prefixo: "Propriedade", contador: "ferrmat-propriedade")
 
 // --- Exemplos e problemas (cinza/laranja — corpo normal) ---
-#let exemplo = ambiente-matematico(cor: gray, espessura: 2pt, prefixo: "Exemplo", contador: "exemplo")
-#let problema = ambiente-matematico(cor: orange, espessura: 2pt, prefixo: "Problema", contador: "problema")
+#let exemplo = ambiente-matematico(cor: gray, espessura: 2pt, prefixo: "Exemplo", contador: "ferrmat-exemplo")
+#let problema = ambiente-matematico(cor: orange, espessura: 2pt, prefixo: "Problema", contador: "ferrmat-problema")
 
 // --- Informais ---
 #let observacao = ambiente-matematico(cor: maroon, espessura: 1pt, prefixo: "Observação")

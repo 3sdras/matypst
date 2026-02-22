@@ -5,7 +5,7 @@
 // Estado global: mapa de autores → cores
 // ---------------------------------------------------------------------------
 
-#let _anotacoes-autores = state("_anotacoes-autores", (:))
+#let _anotacoes-autores = state("ferrmat-anotacoes-autores", (:))
 
 // Pool de cores para atribuição automática
 #let _pool-cores = (orange, purple, teal, fuchsia, olive, eastern, blue, red)
