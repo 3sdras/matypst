@@ -139,6 +139,85 @@ Gráficos de Gantt com tarefas, marcos, dependências e progresso (usa CeTZ).
 )
 ```
 
+### Unidades e Números (`unidades.typ`)
+
+Formatação de números e unidades SI em locale brasileiro, equivalente ao `siunitx` do LaTeX.
+
+```typst
+#num(3.14159)                          // 3,14159
+#num(1234567)                          // 1 234 567
+#num(2.998e8)                          // 2,998 × 10⁸
+#qtd(9.81, "m/s^2")                    // 9,81 m/s²
+#unidade("kg.m/s^2")                   // kg·m/s²
+#faixa-qtd(20, 25, "°C")              // 20 °C a 25 °C
+#ang(45, minutos: 30)                  // 45°30′
+```
+
+**Funções:** `num`, `unidade` (`un`), `qtd`, `faixa-num`, `faixa-qtd`, `lista-num`, `lista-qtd`, `ang`, `tablenum`, `declarar-unidade`, `configurar-numeros`
+
+### Índice Remissivo (`indice.typ`)
+
+Sistema de índice remissivo equivalente ao `makeidx` do LaTeX.
+
+```typst
+A #irem("derivada") derivada de uma função...
+A #irem-def("integral") é definida como...    // exibe "integral" em negrito
+#irem("velocidade", ver: "cinemática")         // remissiva "ver"
+
+// No final do documento:
+#imprimir-indice()
+```
+
+### Provas e Avaliações (`prova.typ`)
+
+Módulo para criação de provas e testes, similar ao `exam.cls` do LaTeX.
+
+```typst
+#cabecalho-prova(
+  instituicao: "UFJ", disciplina: "Cálculo I",
+  professor: "Dr. Silva", data: "22/02/2026",
+)
+#questao(pontos: 2.5)[Calcule a derivada de $f(x) = x^2$.]
+#alternativas("$2x$", "$x^2$", "$2$", "$0$")
+#questao(pontos: 3.0)[Resolva a integral.]
+#espaco-resposta(altura: 5cm)
+#total-pontos()
+```
+
+**Funções:** `cabecalho-prova`, `questao`, `subquestao`, `alternativas`, `verdadeiro-falso`, `preencher-linhas`, `espaco-resposta`, `total-pontos`, `tabela-pontos`
+
+### Anotações e Notas Marginais (`anotacoes.typ`)
+
+Sistema de anotações TODO e notas marginais, similar ao `todonotes` do LaTeX.
+
+```typst
+#registrar-autores(("Alice": blue, "Bob": red))
+#afazer(autor: "Alice")[Revisar esta seção.]
+#urgente[Corrigir erro na fórmula!]
+#nota-margem[Nota explicativa.]
+#lista-de-tarefas()                    // sumário de pendências
+#show: esconder-tarefas               // oculta tudo na versão final
+```
+
+### Formatação de Seções (`secoes.typ`)
+
+Personalização de títulos de seções, equivalente ao `titlesec` do LaTeX.
+
+```typst
+#show heading.where(level: 1): formatar-secao.with(
+  peso: "bold", tamanho: 16pt, forma: "bloco", quebra-pagina: true,
+)
+```
+
+### Colunas e Grades (`colunas.typ`)
+
+Wrappers em português para layout de colunas e grades.
+
+```typst
+#colunas(quantidade: 2)[Texto em duas colunas.]
+#grade(colunas: (1fr, 1fr), [Célula 1], [Célula 2])
+```
+
 ### Cores em Português (`cores.typ`)
 
 Constantes de cores: `preto`, `branco`, `azul`, `vermelho`, `verde`, `amarelo`, `laranja`, `roxo`, `cinza`, `prata`, `azul-marinho`, `azul-petroleo`, `bordo`, `oliva`, `lima`, `agua`, `fucsia`, `oriental`
